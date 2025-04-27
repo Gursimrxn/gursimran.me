@@ -54,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${urbane.variable} ${productSans.variable}`}>
-      <body className="min-h-screen antialiased font-urbane">
+      <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
         <Navbar />
         <main>{children}</main>
       </body>
