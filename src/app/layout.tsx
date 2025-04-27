@@ -1,11 +1,21 @@
 import "./globals.css";
 
-import { Urbanist } from "next/font/google";
 import { Metadata } from "next";
+import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar"
 
-const inter = Urbanist({ subsets: ["latin"] });
+const urbane = localFont({
+  src: '../../public/Urbane-Medium.ttf',
+  display: 'swap',
+  variable: '--font-urbane',
+});
+
+const productSans = localFont({
+  src: '../../public/Product-Sans.ttf',
+  display: 'swap',
+  variable: '--font-productsans',
+});
 
 export const metadata: Metadata = {
   title: "Gursimran Singh | Portfolio",
@@ -43,8 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} min-h-screen antialiased`}>
+    <html lang="en" className={`${urbane.variable} ${productSans.variable}`}>
+      <body className="min-h-screen antialiased font-urbane">
         <Navbar />
         <main>{children}</main>
       </body>
