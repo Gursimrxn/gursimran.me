@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <nav className="relative my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between">
             <div className="border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit">
-                <Image src="/favicon.ico" alt="" width={24} height={24} />
+                <Image src="/me2.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
                 <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
             </div>
             <div className="border-1 border-black/25 rounded-full w-full"></div>
