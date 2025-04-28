@@ -53,7 +53,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${urbane.variable} ${productSans.variable}`}>
+    <html 
+      lang="en" 
+      className={`${urbane.variable} ${productSans.variable}`} 
+      suppressHydrationWarning={true}
+    >
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+      </head>
       <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
         <Navbar />
         <main>{children}</main>
