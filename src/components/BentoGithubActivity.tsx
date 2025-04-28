@@ -1,7 +1,8 @@
+/* eslint-disable react/display-name */
 'use client';
 
 import HeatMap, { type SVGProps } from '@uiw/react-heat-map';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Github } from '@/components/icons/Github';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
@@ -73,12 +74,13 @@ const BentoGithubActivity = ({ data }: Props) => {
     setIsScrolling(false);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  // Stable mouse move handler for dragging
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isScrolling || !scrollContainerRef.current) return;
     const x = e.pageX;
     const walk = (x - startX) * 2;
     scrollContainerRef.current.scrollLeft = startScrollLeft - walk;
-  };
+  }, [isScrolling, startX, startScrollLeft]);
 
   useEffect(() => {
     if (isScrolling) {
@@ -89,7 +91,7 @@ const BentoGithubActivity = ({ data }: Props) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isScrolling]);
+  }, [isScrolling, handleMouseMove]);
 
   if (!mounted) {
     return (

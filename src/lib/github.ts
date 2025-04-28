@@ -3,6 +3,19 @@ import request from 'graphql-request';
 import { GetGithubContributions } from '@/lib/graphql';
 import type { GithubContributionData } from '@/types';
 
+// Define the expected GraphQL response shape
+interface ContributionsResponse {
+  user: {
+    contributionsCollection: {
+      contributionCalendar: {
+        totalContributions: number;
+        weeks: Array<{ contributionDays: Array<{ contributionCount: number; date: string }> }>;
+      };
+    };
+    repositories: { nodes: Array<{ pushedAt: string }> };
+  };
+}
+
 const getGithubContributions = async (username: string): Promise<GithubContributionData> => {
   // If no GitHub token is provided, return mock data
   if (!process.env.GITHUB_ACCESS_TOKEN) {
@@ -18,7 +31,8 @@ const getGithubContributions = async (username: string): Promise<GithubContribut
   }
 
   try {
-    const response = await request({
+    // Request with typed response
+    const response = await request<ContributionsResponse>({
       url: 'https://api.github.com/graphql',
       document: GetGithubContributions,
       variables: { userName: username },
@@ -27,19 +41,18 @@ const getGithubContributions = async (username: string): Promise<GithubContribut
       }
     });
 
-    const parsedResponse = (response as any).user.contributionsCollection.contributionCalendar;
+    // Extract calendar data
+    const calendar = response.user.contributionsCollection.contributionCalendar;
 
     return {
-      lastPushedAt: (response as any).user.repositories.nodes[0].pushedAt,
-      totalContributions: parsedResponse.totalContributions,
-      contributions: parsedResponse.weeks.flatMap((week: any) => {
-        return week.contributionDays.map((day: any) => {
-          return {
-            count: day.contributionCount,
-            date: day.date.replace(/-/g, '/')
-          };
-        });
-      })
+      lastPushedAt: response.user.repositories.nodes[0].pushedAt,
+      totalContributions: calendar.totalContributions,
+      contributions: calendar.weeks.flatMap(week =>
+        week.contributionDays.map(day => ({
+          count: day.contributionCount,
+          date: day.date.replace(/-/g, '/')
+        }))
+      )
     };
   } catch (error) {
     console.error('Error fetching GitHub contributions:', error);
