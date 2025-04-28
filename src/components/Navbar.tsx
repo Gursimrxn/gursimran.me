@@ -8,7 +8,7 @@ const Navbar = () => {
                 <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
                 <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
             </div>
-            <div className="border-1 border-black/25 rounded-full w-full"></div>
+            <div className="border-1 border-black/25 rounded-full w-full sm:block hidden"></div>
             <div className="border-1 border-black/25 rounded-full flex items-center p-2">
                 <ol className="flex gap-2 justify-center items-center">
                     <Link href="https://github.com/gursimrxn" className="border-black/50 border-1 rounded-full p-2">
