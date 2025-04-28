@@ -21,7 +21,7 @@ export default function LandingPage() {
     <main className="px-4">
       <Hero />
       
-      <div className="my-4 max-w-7xl mx-auto grid md:grid-cols-2 grid-cols-1 gap-2">
+      <div className="my-4 max-w-7xl mx-auto grid md:grid-cols-2 grid-cols-1 gap-4">
         <Suspense fallback={<div className="h-[270px] rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] animate-pulse" />}>
           <GitHubActivitySection />
         </Suspense>
