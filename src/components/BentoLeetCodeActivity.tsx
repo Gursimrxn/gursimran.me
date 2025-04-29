@@ -168,15 +168,17 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             rectSize={16}
             rectRender={renderRect((date) => !isScrolling && setHoveredTile(date))}
             panelColors={{
-              1: 'rgba(255, 251, 240, 0.4)', // Much lighter/transparent for zero contributions
-              2: '#FFE0B0',
-              3: '#FFD8A0',
-              5: '#FFD090',
-              8: '#FFA116',
-              10: '#FF9100',
-              15: '#E07C00',
-              20: '#B86000',
-              30: '#964B00'
+              0: 'rgba(255, 251, 240, 0.2)', // Even more transparent for zero
+              1: '#FFECD1', // Very light peach for 1 problem
+              2: '#FFD599', // Light orange-peach for 2 problems
+              3: '#FFBF66', // Medium peach for 3 problems
+              4: '#FFA833', // Medium-dark peach for 4 problems
+              5: '#FF9100', // Dark orange for 5 problems
+              8: '#E07C00', // LeetCode dark orange for 8 problems
+              10: '#C46B00', // Brown-orange for 10 problems
+              15: '#A85A00', // Medium brown for 15 problems
+              20: '#8C4900', // Dark brown for 20 problems
+              30: '#6B3900' // Very dark brown for 30+ problems
             }}
           />
         </div>
@@ -185,10 +187,10 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="flex gap-1 items-center">
-            <span className="h-3 w-3 rounded-full bg-[#FFE8C8]"></span>
-            <span className="h-3 w-3 rounded-full bg-[#FFD090]"></span>
-            <span className="h-3 w-3 rounded-full bg-[#FFA116]"></span>
-            <span className="h-3 w-3 rounded-full bg-[#B86000]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#FFECD1]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#FFBF66]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#FF9100]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#8C4900]"></span>
           </div>
           <span className="text-sm text-gray-600">Less to more</span>
         </div>
