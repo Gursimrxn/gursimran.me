@@ -167,7 +167,7 @@ const BentoGithubActivity = ({ data }: Props) => {
             rectSize={16}
             rectRender={renderRect((date) => !isScrolling && setHoveredTile(date))}
             panelColors={{
-              0: '#F2F6FF',
+              0: 'rgba(242, 246, 255, 0.4)', // Much lighter/transparent for zero contributions
               1: '#E8EEFF',
               4: '#3588FF',
               8: '#0767FB',
