@@ -58,7 +58,10 @@ const BentoGithubActivity = ({ data }: Props) => {
     if (scrollContainerRef.current) {
       setTimeout(() => {
         if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+            scrollContainerRef.current.scrollTo({
+            left: scrollContainerRef.current.scrollWidth,
+            behavior: 'smooth',
+            });
         }
       }, 100);
     }
@@ -167,17 +170,11 @@ const BentoGithubActivity = ({ data }: Props) => {
             rectSize={16}
             rectRender={renderRect((date) => !isScrolling && setHoveredTile(date))}
             panelColors={{
-              0: 'rgba(242, 246, 255, 0.2)', // Very transparent for zero contributions
-              1: '#E9F1FF', // Very light blue for 1 contribution
-              2: '#D5E3FF', // Light blue for 2 contributions
-              3: '#A9C6FF', // Medium-light blue for 3 contributions
-              4: '#7BADFF', // Medium blue for 4 contributions
-              5: '#4D94FF', // Medium-dark blue for 5 contributions
-              8: '#0767FB', // GitHub-like blue for 8 contributions
-              10: '#0052CC', // Dark blue for 10 contributions
-              15: '#003E99', // Very dark blue for 15 contributions
-              20: '#002966', // Navy blue for 20 contributions
-              30: '#001A40' // Almost black-blue for 30+ contributions
+              0: '#F2F6FF',
+              1: '#E8EEFF',
+              4: '#3588FF',
+              8: '#0767FB',
+              12: '#0033A0'
             }}
           />
         </div>
@@ -186,10 +183,9 @@ const BentoGithubActivity = ({ data }: Props) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="flex gap-1 items-center">
-            <span className="h-3 w-3 rounded-full bg-[#E9F1FF]"></span>
-            <span className="h-3 w-3 rounded-full bg-[#A9C6FF]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#E8EEFF]"></span>
+            <span className="h-3 w-3 rounded-full bg-[#3588FF]"></span>
             <span className="h-3 w-3 rounded-full bg-[#0767FB]"></span>
-            <span className="h-3 w-3 rounded-full bg-[#002966]"></span>
           </div>
           <span className="text-sm text-gray-600">Less to more</span>
         </div>

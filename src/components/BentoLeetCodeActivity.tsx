@@ -59,7 +59,10 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
     if (scrollContainerRef.current) {
       setTimeout(() => {
         if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+            scrollContainerRef.current.scrollTo({
+            left: scrollContainerRef.current.scrollWidth,
+            behavior: 'smooth',
+            });
         }
       }, 100);
     }
