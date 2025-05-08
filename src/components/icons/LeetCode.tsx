@@ -4,6 +4,7 @@ import React from "react";
 
 export const LeetCode = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
+        {...props}
         width="16"
         height="16"
         viewBox="0 0 20 20"

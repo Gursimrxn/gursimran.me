@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar"
@@ -64,6 +65,7 @@ export default function RootLayout({
       <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
         <Navbar />
         <main>{children}</main>
+        <Analytics />
       </body>
     </html>
   );

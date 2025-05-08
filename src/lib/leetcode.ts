@@ -155,9 +155,6 @@ export const getLeetCodeDetailedStats = async (username: string): Promise<LeetCo
       (total, { count }) => total + count, 
       0
     );
-    const percentile = totalProblems > 0 ? 
-      Math.round((totalSolved / totalProblems) * 1000) / 10 : 
-      99.8;
     
     // Get stats by difficulty
     const easySolved = stats.acSubmissionNum.find(d => d.difficulty === 'Easy')?.count || 0;
