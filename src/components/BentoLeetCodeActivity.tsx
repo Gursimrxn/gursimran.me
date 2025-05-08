@@ -7,6 +7,7 @@ import { LeetCode } from '@/components/icons/LeetCode';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './BentoBadge';
+import { LeetCodeDetailedStats } from '@/lib/leetcode';
 
 const getDateProps = () => {
   const today = new Date();
@@ -22,7 +23,7 @@ const renderRect =
     const formattedDate =
       date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) +
       getDateSuffix(date.getDate());
-    const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} problems solved on ${formattedDate}`;
+    const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} submissions on ${formattedDate}`;
 
     return (
       <rect
@@ -34,10 +35,9 @@ const renderRect =
   };
 
 interface Props {
-  data: GithubContributionData;
+  data: GithubContributionData & { leetCodeStats?: LeetCodeDetailedStats };
 }
 
-// eslint-disable-next-line react/display-name
 const BentoLeetCodeActivity = ({ data }: Props) => {
   const [defaultValue, setDefaultValue] = useState<string>();
   const [mounted, setMounted] = useState(false);
@@ -47,8 +47,19 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
   const [startX, setStartX] = useState(0);
   const [startScrollLeft, setStartScrollLeft] = useState(0);
 
+  // Default stats if not provided
+  const stats = data.leetCodeStats || {
+    totalSolved: data.totalContributions,
+    totalSubmissions: 0,
+    easySolved: 0,
+    mediumSolved: 0,
+    hardSolved: 0,
+    percentile: 0,
+    acSubmissionsByDifficulty: []
+  };
+
   useEffect(() => {
-    const value = `${formatNumber(data.totalContributions)} problems solved in the last year`;
+    const value = `${formatNumber(data.totalContributions)} submissions in the last year`;
     setDefaultValue(value);
     setHoveredTile(value);
     setMounted(true);
@@ -198,7 +209,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
           <span className="text-sm text-gray-600">Less to more</span>
         </div>
         <div className="text-sm text-gray-600 font-product">
-          {formatNumber(data.totalContributions)} problems solved
+          {formatNumber(stats.easySolved + stats.mediumSolved + stats.hardSolved)} problems solved
         </div>
       </div>
     </div>
