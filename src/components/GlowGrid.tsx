@@ -2,7 +2,7 @@
 
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
 
-export function GlowingEffectDemo() {
+export function GlowingCardGrid() {
   return (
     <ul className="grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-2 xl:grid-cols-12 xl:grid-rows-none xl:auto-cols-fr xl:items-center">
       <GridItem

@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 
-import BentoGithubActivity from "@/components/BentoGithubActivity";
-import BentoLeetCodeActivity from "@/components/BentoLeetCodeActivity";
+import BentoGithubActivity from "@/components/GithubActivity";
+import BentoLeetCodeActivity from "@/components/LeetCodeActivity";
 import Hero from "@/components/Hero";
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import getGithubContributions from "@/lib/github";
 import getLeetCodeContributions from "@/lib/leetcode";
-import { GlowingEffectDemo } from "@/components/test";
+import { GlowingCardGrid } from "@/components/GlowGrid";
 
 // This server component fetches the data and passes it to the client component
 async function GitHubActivitySection() {
@@ -79,7 +79,7 @@ export default function LandingPage() {
             <LeetCodeActivitySection />
           </Suspense>
         </div>
-        <GlowingEffectDemo/>
+        <GlowingCardGrid/>
       </div>
     </main>
   );
