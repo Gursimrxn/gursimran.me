@@ -4,35 +4,15 @@ import { GlowingEffect } from "@/components/ui/GlowingEffect";
 
 export function GlowingEffectDemo() {
   return (
-    <ul className="grid grid-cols-1 grid-rows-none gap-2 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+    <ul className="grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-2 xl:grid-cols-12 xl:grid-rows-none xl:auto-cols-fr xl:items-center">
       <GridItem
         area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
-        title="Do things the right way"
-        description="Running out of copy so I'll write anything."
       />
-
       <GridItem
-        area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
-        title="The best AI code editor ever."
-        description="Yes, it's true. I'm not even kidding. Ask my mom if you don't believe me."
+        area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/2/8]"
       />
-
       <GridItem
-        area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
-        title="You should buy Aceternity UI Pro"
-        description="It's the best money you'll ever spend"
-      />
-
-      <GridItem
-        area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
-        title="This card is also built by Cursor"
-        description="I'm not even kidding. Ask my mom if you don't believe me."
-      />
-
-      <GridItem
-        area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
-        title="Coming soon on Aceternity UI"
-        description="I'm writing the code as I record this, no shit."
+        area="md:[grid-area:1/7/3/13] xl:[grid-area:1/8/2/13]"
       />
     </ul>
   );
@@ -40,33 +20,24 @@ export function GlowingEffectDemo() {
 
 interface GridItemProps {
   area: string;
-  title: string;
-  description: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const GridItem = ({ area, title, description }: GridItemProps) => {
+const GridItem = ({ area, children }: GridItemProps) => {
+  const isTallCard = area.includes("1/7/3/13");
+  
   return (
-    <li className={`min-h-[14rem] list-none ${area}`}>
-      <div className="relative h-full rounded-[40px] border-1 border-black/25 p-2 md:rounded-3xl md:p-3">
+    <li className={`${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[18rem]'} list-none ${area} xl:h-full rounded-[40px] cursor-pointer transition-all ease`}>
+      <div className="relative h-full w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA]">
         <GlowingEffect
           spread={40}
+          borderWidth={1}
           glow={true}
           disabled={false}
           proximity={64}
           inactiveZone={0.01}
         />
-        <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6">
-          <div className="relative flex flex-1 flex-col justify-between gap-3">
-            <div className="space-y-3">
-              <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-black md:text-2xl/[1.875rem] dark:text-white">
-                {title}
-              </h3>
-              <h2 className="font-sans text-sm/[1.125rem] text-black md:text-base/[1.375rem] dark:text-neutral-400 [&_b]:md:font-semibold [&_strong]:md:font-semibold">
-                {description}
-              </h2>
-            </div>
-          </div>
-        </div>
+        {children}
       </div>
     </li>
   );
