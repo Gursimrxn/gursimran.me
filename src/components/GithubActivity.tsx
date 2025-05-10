@@ -8,6 +8,7 @@ import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
 import { GlowingEffect } from './ui/GlowingEffect';
+import { lenisManager } from '@/lib/lenisManager';
 
 const getDateProps = () => {
   const today = new Date();
@@ -28,7 +29,12 @@ const renderRect =
     return (
       <rect
         className="transition-all hover:brightness-125"
-        onMouseEnter={() => handleMouseEnter(tileInfo)}
+        onMouseEnter={() => {
+          // Only update state if neither local nor global scrolling is happening
+          if (!lenisManager.isScrolling()) {
+            handleMouseEnter(tileInfo);
+          }
+        }}
         {...props}
       />
     );
@@ -164,11 +170,15 @@ const BentoGithubActivity = ({ data }: Props) => {
             scrollbar-color: #0767FB transparent;
           }
         `}</style>
-        <div className="min-w-[960px] bg-sky-100/20 rounded-[20px] pt-2 pr-6">
-          <HeatMap
+        <div className="min-w-[960px] bg-sky-100/20 rounded-[20px] pt-2 pr-6">          <HeatMap
             {...getDateProps()}
             className="w-full mx-auto"
-            onMouseLeave={() => !isScrolling && setHoveredTile(defaultValue)}
+            onMouseLeave={() => {
+              // Only update if neither local nor global scrolling is happening
+              if (!isScrolling && !lenisManager.isScrolling()) {
+                setHoveredTile(defaultValue);
+              }
+            }}
             value={data.contributions ?? []}
             weekLabels={false}
             monthLabels={false}
@@ -177,7 +187,12 @@ const BentoGithubActivity = ({ data }: Props) => {
             style={{ color: '#fff' }}
             rectProps={{ rx: 5 }}
             rectSize={16}
-            rectRender={renderRect((date) => !isScrolling && setHoveredTile(date))}
+            rectRender={renderRect((date) => {
+              // Only update if neither local nor global scrolling is happening
+              if (!isScrolling && !lenisManager.isScrolling()) {
+                setHoveredTile(date);
+              }
+            })}
             panelColors={{
               0: '#F2F6FF',
               1: '#E8EEFF',
