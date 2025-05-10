@@ -68,7 +68,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <Navbar />
           <main>{children}</main>
-          <ScrollToTopButton hideWhenAtBottom={true} />
+          <ScrollToTopButton />
           <Analytics />
         </SmoothScrollProvider>
       </body>
