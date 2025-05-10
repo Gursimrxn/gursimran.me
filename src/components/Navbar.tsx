@@ -29,7 +29,7 @@ const Navbar = () => {
     return (
         <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
             <div 
-                onClick={() => scrollToTop({ duration: 1.5 })}
+                onClick={() => scrollToTop({ duration: 1 })}
                 className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-colors" ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}
             >
                 <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />

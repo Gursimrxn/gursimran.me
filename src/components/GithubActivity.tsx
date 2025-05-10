@@ -114,10 +114,11 @@ const BentoGithubActivity = ({ data }: Props) => {
   return (
     <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6 pointer-events-auto">
       <GlowingEffect
-          spread={40}
+          spread={25}
+          borderWidth={1}
           glow={true}
           disabled={false}
-          proximity={64}
+          proximity={40}
           inactiveZone={0.01}
         />
       
