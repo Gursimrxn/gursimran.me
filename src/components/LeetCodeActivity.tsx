@@ -9,6 +9,7 @@ import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
 import { LeetCodeDetailedStats } from '@/lib/leetcode';
 import { GlowingEffect } from './ui/GlowingEffect';
+import { lenisManager } from '@/lib/lenisManager';
 
 const getDateProps = () => {
   const today = new Date();
@@ -176,11 +177,15 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             scrollbar-color: #FFA116 transparent;
           }
         `}</style>
-        <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
-          <HeatMap
+        <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">          <HeatMap
             {...getDateProps()}
             className="w-full mx-auto"
-            onMouseLeave={() => !isScrolling && setHoveredTile(defaultValue)}
+            onMouseLeave={() => {
+              // Only update if neither local nor global scrolling is happening
+              if (!isScrolling && !lenisManager.isScrolling()) {
+                setHoveredTile(defaultValue);
+              }
+            }}
             value={data.contributions ?? []}
             weekLabels={false}
             monthLabels={false}
@@ -189,7 +194,12 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             style={{ color: '#fff' }}
             rectProps={{ rx: 5 }}
             rectSize={16}
-            rectRender={renderRect((date) => !isScrolling && setHoveredTile(date))}
+            rectRender={renderRect((date) => {
+              // Only update if neither local nor global scrolling is happening
+              if (!isScrolling && !lenisManager.isScrolling()) {
+                setHoveredTile(date);
+              }
+            })}
             panelColors={{
               0: 'rgba(255, 251, 240, 0.2)', // Even more transparent for zero
               1: '#FFECD1', // Very light peach for 1 problem
