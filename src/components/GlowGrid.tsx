@@ -30,13 +30,13 @@ const GridItem = ({ area, children }: GridItemProps) => {
     <li className={`
       ${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[18rem]'}
       list-none ${area} xl:h-full rounded-[28px] cursor-pointer 
-      transition-all duration-200 ease-in-out
-      hover:scale-[1.005] 
+      transition-all duration-500 ease-out
+      hover:scale-[1.003] 
       sm:shadow-sm
     `}>
       <div className="relative h-full w-full rounded-[28px] border-1 border-black/10 
         bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]
-        hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] transition-shadow
+        hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] transition-shadow duration-500
       ">
         <GlowingEffect
           spread={25}
