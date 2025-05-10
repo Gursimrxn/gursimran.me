@@ -5,6 +5,10 @@ import { Analytics } from '@vercel/analytics/next';
 import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar"
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import ScrollProgress from "@/components/ScrollProgress";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
+import LenisDebug from "@/components/LenisDebug";
 
 const urbane = localFont({
   src: '../../public/Urbane-Medium.ttf',
@@ -63,9 +67,14 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
       </head>
       <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
-        <Navbar />
-        <main>{children}</main>
-        <Analytics />
+        <SmoothScrollProvider>
+          <ScrollProgress />
+          <Navbar />
+          <main>{children}</main>
+          <ScrollToTopButton />
+          <LenisDebug />
+          <Analytics />
+        </SmoothScrollProvider>
       </body>
     </html>
   );
