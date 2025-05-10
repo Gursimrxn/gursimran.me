@@ -8,7 +8,7 @@ import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
 import { LeetCodeDetailedStats } from '@/lib/leetcode';
-import { GlowingEffect } from './ui/glowing-effect';
+import { GlowingEffect } from './ui/GlowingEffect';
 
 const getDateProps = () => {
   const today = new Date();

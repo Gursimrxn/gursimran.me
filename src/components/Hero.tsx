@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GlowingEffect } from "./ui/glowing-effect";
+import { GlowingEffect } from "./ui/GlowingEffect";
 
 const Hero = () => {
     return (

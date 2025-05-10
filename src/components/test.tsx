@@ -1,6 +1,6 @@
 "use client";
 
-import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { GlowingEffect } from "@/components/ui/GlowingEffect";
 
 export function GlowingEffectDemo() {
   return (

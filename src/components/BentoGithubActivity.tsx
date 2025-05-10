@@ -7,7 +7,7 @@ import { Github } from '@/components/icons/Github';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
-import { GlowingEffect } from './ui/glowing-effect';
+import { GlowingEffect } from './ui/GlowingEffect';
 
 const getDateProps = () => {
   const today = new Date();

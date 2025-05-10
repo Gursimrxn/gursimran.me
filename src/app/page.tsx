@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import BentoGithubActivity from "@/components/BentoGithubActivity";
 import BentoLeetCodeActivity from "@/components/BentoLeetCodeActivity";
 import Hero from "@/components/Hero";
-import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import getGithubContributions from "@/lib/github";
 import getLeetCodeContributions from "@/lib/leetcode";
 import { GlowingEffectDemo } from "@/components/test";
