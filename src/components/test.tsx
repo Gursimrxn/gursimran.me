@@ -27,16 +27,26 @@ const GridItem = ({ area, children }: GridItemProps) => {
   const isTallCard = area.includes("1/7/3/13");
   
   return (
-    <li className={`${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[18rem]'} list-none ${area} xl:h-full rounded-[40px] cursor-pointer transition-all ease`}>
-      <div className="relative h-full w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA]">
+    <li className={`
+      ${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[18rem]'}
+      list-none ${area} xl:h-full rounded-[28px] cursor-pointer 
+      transition-all duration-200 ease-in-out
+      hover:scale-[1.005] 
+      sm:shadow-sm
+    `}>
+      <div className="relative h-full w-full rounded-[28px] border-1 border-black/10 
+        bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]
+        hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] transition-shadow
+      ">
         <GlowingEffect
-          spread={40}
+          spread={25}
           borderWidth={1}
           glow={true}
           disabled={false}
-          proximity={64}
+          proximity={40}
           inactiveZone={0.01}
         />
+        <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity hover:opacity-30 bg-gradient-to-t from-gray-50/5 to-transparent"></div>
         {children}
       </div>
     </li>
