@@ -1,15 +1,42 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { throttle } from "@/lib/utils";
+import { scrollToTop } from "@/lib/scroll";
+import { lenisManager } from "@/lib/lenisManager";
 
 const Navbar = () => {
+    const [scrolled, setScrolled] = useState(true);    // Handle scroll event with throttle for better performance
+    useEffect(() => {
+        const handleScroll = throttle(() => {
+            // Only update state if not actively scrolling
+            if (!lenisManager.isScrolling()) {
+                const offset = window.scrollY;
+                if (offset > 100) {
+                    setScrolled(true);
+                } else {
+                    setScrolled(false);
+                }
+            }
+        }, 200);
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <nav className="relative my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between">
-            <div className="border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit">
+        <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
+            <div 
+                onClick={() => scrollToTop({ duration: 1.5 })}
+                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-colors" ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}
+            >
                 <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
                 <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
             </div>
-            <div className="border-1 border-black/25 rounded-full w-full sm:block hidden"></div>
-            <div className="border-1 border-black/25 rounded-full flex items-center p-2">
+            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}></div>
+            <div className={`border-1 border-black/25 rounded-full flex items-center p-2 ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}>
                 <ol className="flex gap-2 justify-center items-center">
                     <Link href="https://github.com/gursimrxn" className="border-black/50 border-1 rounded-full p-2">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" >

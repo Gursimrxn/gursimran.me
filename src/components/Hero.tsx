@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { GlowingEffect } from "./ui/GlowingEffect";
-import RevealOnScroll from "./RevealOnScroll";
 
 const Hero = () => {
     return (
@@ -22,7 +21,7 @@ const Hero = () => {
                     </svg>
                     <p className="text-sm font-product">Hey, I am Developer focused on not screwing up!</p>
                 </div>
-            </div>\
+            </div>
             <div>
 
             <h1 className="text-5xl sm:text-6xl my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center">
