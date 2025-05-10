@@ -8,7 +8,6 @@ import Navbar from "@/components/Navbar"
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import ScrollProgress from "@/components/ScrollProgress";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
-import LenisDebug from "@/components/LenisDebug";
 
 const urbane = localFont({
   src: '../../public/Urbane-Medium.ttf',
@@ -72,7 +71,6 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <ScrollToTopButton />
-          <LenisDebug />
           <Analytics />
         </SmoothScrollProvider>
       </body>
