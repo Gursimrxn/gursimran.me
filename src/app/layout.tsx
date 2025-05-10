@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar"
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 const urbane = localFont({
   src: '../../public/Urbane-Medium.ttf',
