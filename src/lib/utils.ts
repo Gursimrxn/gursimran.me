@@ -1,4 +1,13 @@
 // Utility functions for the GitHub Bento grid
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * Combines multiple class names with Tailwind CSS specificity handling
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 /**
  * Formats a date to display in a readable format

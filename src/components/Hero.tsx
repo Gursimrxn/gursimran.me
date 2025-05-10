@@ -1,8 +1,16 @@
 import Image from "next/image";
+import { GlowingEffect } from "./ui/glowing-effect";
 
 const Hero = () => {
     return (
         <main className="relative bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] my-2 max-w-7xl mx-auto flex flex-col items-center px-4 border-1 border-black/25 rounded-[40px] py-12">
+            <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+            />
             <div className="relative my-6">
                 <div className="bg-gradient-to-t from-[#F9850010] to-[#FEFDFD] border-1 border-black/10 rounded-full px-2 py-2 flex gap-3 items-center">
                 <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
