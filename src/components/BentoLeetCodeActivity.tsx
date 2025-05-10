@@ -6,8 +6,9 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { LeetCode } from '@/components/icons/LeetCode';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
-import BentoBadge from './BentoBadge';
+import BentoBadge from './ui/BentoBadge';
 import { LeetCodeDetailedStats } from '@/lib/leetcode';
+import { GlowingEffect } from './ui/glowing-effect';
 
 const getDateProps = () => {
   const today = new Date();
@@ -117,7 +118,15 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
   }
 
   return (
-    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6">
+    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6 pointer-events-auto">
+      <GlowingEffect
+          spread={40}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+        />
+      
       <div className="flex items-center justify-between">
         <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" />
         <p className="line-clamp-1 text-sm font-product">{hoveredTile}</p>
