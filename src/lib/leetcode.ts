@@ -150,13 +150,6 @@ export const getLeetCodeDetailedStats = async (username: string): Promise<LeetCo
       0
     );
     
-    // Calculate percentile based on total problems vs. solved
-    const totalProblems = response.allQuestionsCount.reduce(
-      (total, { count }) => total + count, 
-      0
-    );
-    
-    // Get stats by difficulty
     const easySolved = stats.acSubmissionNum.find(d => d.difficulty === 'Easy')?.count || 0;
     const mediumSolved = stats.acSubmissionNum.find(d => d.difficulty === 'Medium')?.count || 0;
     const hardSolved = stats.acSubmissionNum.find(d => d.difficulty === 'Hard')?.count || 0;
