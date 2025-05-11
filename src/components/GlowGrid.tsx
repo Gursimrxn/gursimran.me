@@ -1,6 +1,7 @@
 "use client";
 
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
+import TypingSpeed from "./TypingSpeed";
 
 export function GlowingCardGrid() {
   return (
@@ -12,8 +13,8 @@ export function GlowingCardGrid() {
       </GridItem>
       <GridItem
         area="[grid-area:1/5/2/8] md:[grid-area:2/1/3/7] xl:[grid-area:1/5/2/8]"
-      > 
-        
+      >
+        <TypingSpeed wpm={144} acc={100} time={10} />
       </GridItem>
       <GridItem
         area="[grid-area:2/1/3/8] md:[grid-area:1/7/3/13] xl:[grid-area:1/8/2/13]"
