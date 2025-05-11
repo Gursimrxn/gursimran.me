@@ -24,8 +24,7 @@ interface TypingDetailProps {
 
 export const TypingDetail = ({
   icon: Icon,
-  value,
-  category
+  value
 }: TypingDetailProps) => {
   return (
     <div className='flex items-center gap-1 tracking-wider text-black/50'>
@@ -35,9 +34,7 @@ export const TypingDetail = ({
   );
 };
 
-interface Props extends MonkeyTypeData {}
-
-const TypingSpeed = (props: Props) => {
+const TypingSpeed = (props: MonkeyTypeData) => {
   const gradientRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
