@@ -13,3 +13,13 @@ export interface GithubContributionData {
 export interface GithubRepositoryLastUpdated {
   pushedAt: string;
 }
+
+// MonkeyType typing speed data
+export type MonkeyTypeLanguage = 'english';
+
+export interface MonkeyTypeData {
+  wpm: number;
+  acc: number;
+  time: number;
+  language?: MonkeyTypeLanguage;
+}
