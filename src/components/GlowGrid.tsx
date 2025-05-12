@@ -36,9 +36,9 @@ const GridItem = ({ area, children }: GridItemProps) => {
   
   return (
     <li className={`
-      ${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[18rem]'}
-      ${isSmThirdItem ? 'sm:min-h-[20rem]' : ''}
-      list-none ${area} xl:h-full rounded-[28px] cursor-pointer 
+      ${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[10rem]'}
+      ${isSmThirdItem ? 'sm:min-h-[15rem]' : ''}
+      list-none ${area} xl:h-full rounded-[40px] cursor-pointer 
       transition-all duration-500 ease-out
       hover:scale-[1.003] 
       sm:shadow-sm
