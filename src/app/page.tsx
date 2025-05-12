@@ -7,6 +7,7 @@ import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import getGithubContributions from "@/lib/github";
 import getLeetCodeContributions from "@/lib/leetcode";
 import { GlowingCardGrid } from "@/components/GlowGrid";
+export const revalidate = 3600;
 
 // This server component fetches the data and passes it to the client component
 async function GitHubActivitySection() {
