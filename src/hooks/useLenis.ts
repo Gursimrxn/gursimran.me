@@ -4,24 +4,41 @@ import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { lenisManager } from "@/lib/lenisManager";
 
-// Define the custom easing function
-const customEasing = (t: number): number => Math.min(1, 1.001 - Math.pow(2, -10 * t));
-
 /**
  * A custom hook to initialize and manage Lenis smooth scrolling
  * @param options - Configuration options for Lenis
  * @returns Reference to the Lenis instance
  */
-export function useLenis(options = {}) {
+export function useLenis(options: {
+  duration?: number;
+  easing?: (t: number) => number;
+  wheelMultiplier?: number;
+  smoothWheel?: boolean;
+  enabled?: boolean;
+  [key: string]: any;
+} = {}) {
   const lenisRef = useRef<Lenis | null>(null);
+  const { enabled = true, ...lenisOptions } = options;
+  
   useEffect(() => {
-    // Initialize Lenis with optimal settings for best performance
+    // Only initialize Lenis if enabled
+    if (!enabled) {
+      // Clean up any existing instance
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisManager.setLenisInstance(null);
+        lenisRef.current = null;
+      }
+      return;
+    }
+    
+    // Initialize Lenis with original smooth settings
     const lenis = new Lenis({
-      duration: 0.8,           // Faster scrolling (reduced from 1.2)
-      easing: customEasing,    // Improved easing function for smooth stops
-      wheelMultiplier: 1.2,    // Increased mouse speed multiplier
-      touchMultiplier: 2.5,    // Increased touch speed multiplier for mobile
-      ...options,              // Override with user options
+      duration: 1.2,           // Original duration
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Original easing function
+      wheelMultiplier: 1.0,    // Original wheel multiplier
+      smoothWheel: true,       // Enable smooth wheel scrolling
+      ...lenisOptions,         // Override with user options
     });
 
     // Store the instance in the ref and global manager
@@ -40,9 +57,10 @@ export function useLenis(options = {}) {
     // Clean up on unmount
     return () => {
       lenis.destroy();
+      lenisManager.setLenisInstance(null);
       lenisRef.current = null;
     };
-  }, [options]);
+  }, [enabled, lenisOptions]);
 
   return lenisRef;
 }

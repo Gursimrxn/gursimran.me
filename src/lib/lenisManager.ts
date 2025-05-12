@@ -22,15 +22,16 @@ class LenisManager {
     }
     return LenisManager.instance;
   }
-
   /**
    * Set the Lenis instance
    */
-  public setLenisInstance(lenis: Lenis): void {
+  public setLenisInstance(lenis: Lenis | null): void {
     this.lenisInstance = lenis;
     
-    // Set up scroll event to track scrolling state
-    lenis.on('scroll', this.onScroll.bind(this));
+    // Set up scroll event to track scrolling state if Lenis exists
+    if (lenis) {
+      lenis.on('scroll', this.onScroll.bind(this));
+    }
   }
   /**
    * Get the current Lenis instance

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useLenis } from "@/hooks/useLenis";
 import { lenisManager } from "@/lib/lenisManager";
 
@@ -8,42 +8,47 @@ interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
-/**
- * SmoothScrollProvider component that wraps the application with Lenis smooth scrolling
- * This is a client component to handle the smooth scrolling functionality
- */
-export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {  // Initialize Lenis with optimal settings for performance and smooth user experience
+export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {  
   useLenis({
-    duration: 0.8, // Faster scrolling (reduced from 1.8)
-    wheelMultiplier: 1.2, // Increased multiplier for faster scrolling
-    touchMultiplier: 2.5, // Increased for better mobile experience
+    duration: 1,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Original easing function
+    wheelMultiplier: 1.0,
+    smoothWheel: true,
   });
-
+  
   // Set up anchor link handling
   useEffect(() => {
     function handleAnchorLinks() {
+      // Get Lenis instance (will be null on mobile)
       const lenis = lenisManager.getLenis();
-      if (!lenis) return;
-      
+
       // Handle all anchor links on the page
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = anchor.getAttribute('href');
           if (!targetId || targetId === '#') return;
-            // Smooth scroll to target
+          
           const target = document.querySelector(targetId);
-          if (target) {
+          if (!target) return;
+          
+          if (lenis) {
+            // Use Lenis smooth scrolling on desktop
             lenis.scrollTo(target as HTMLElement, { 
               offset: -100, // Offset to account for fixed header
-              duration: 1.2 
+              duration: 1
+            });
+          } else {
+            // Fall back to native smooth scrolling on mobile
+            const targetPosition = (target as HTMLElement).getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
             });
           }
         });
       });
-    }
-
-    // Wait for DOM to be ready
+    }    // Wait for DOM to be ready
     if (document.readyState === 'complete') {
       handleAnchorLinks();
     } else {
