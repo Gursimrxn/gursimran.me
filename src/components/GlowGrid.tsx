@@ -44,7 +44,7 @@ const GridItem = ({ area, children }: GridItemProps) => {
       hover:scale-[1.003] 
       sm:shadow-sm
     `}>
-      <div className="relative h-full w-full rounded-[28px] border-1 border-black/10 
+      <div className="relative h-full w-full rounded-[40px] border-1 border-black/10 
         bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]
         hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] transition-shadow duration-500
       ">
