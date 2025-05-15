@@ -7,7 +7,7 @@ import SmoothScrollProvider from './SmoothScrollProvider';
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
 	return (
-		<NextThemesProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+		<NextThemesProvider attribute="class" defaultTheme="light">
 			<SmoothScrollProvider>
 				{children}
 			</SmoothScrollProvider>

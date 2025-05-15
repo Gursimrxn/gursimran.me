@@ -6,6 +6,7 @@ import { Medal } from "@/components/icons/Medal";
 import BentoBadge from "@/components/ui/BentoBadge";
 import { GlowingEffect } from '@/components/ui/GlowingEffect';
 import { cn } from '@/lib/utils';
+import ViewButton from './ui/ViewButton';
 
 type HighlightItem = {
   title: string;
@@ -20,8 +21,9 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
     <Link 
       href={item.href}
       className={cn(
-        "group flex items-center justify-between rounded-[30px] border-1 border-black/10",
-        "bg-[#0475F71A] hover:bg-[#0475f720] py-5 px-6",
+        "group flex items-center justify-between rounded-[20px] sm:rounded-[30px] border-1 border-black/10",
+        "bg-[#0475F71A] hover:bg-[#0475f720]",
+        "py-3 px-4 sm:py-4 sm:px-5 md:py-5 md:px-6", // Responsive padding
         "transition-all duration-300",
         "opacity-0 translate-y-4",
         "animate-fade-in-up"
@@ -30,27 +32,19 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
       aria-label={item.title}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)} // Add touch support
+      onTouchEnd={() => setTimeout(() => setIsHovered(false), 1000)} // Delay to see button
     >
-      <span className="text-base font-medium text-gray-800 group-hover:text-gray-900">{item.title}</span>
+      <span className="text-sm sm:text-base font-medium text-gray-800 group-hover:text-gray-900 truncate mr-2 trqnsition-all duration-300">
+        {item.title}
+      </span>
       
-      <div
-        className="flex items-center justify-center rounded-[30px] bg-gray-300/50 w-8 h-8 text-gray-700"
-        aria-hidden="true"
-      >
-        <svg
-          width="16"
-          height="10"
-          viewBox="0 0 16 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className={cn(
-            "transition-transform duration-300",
-            isHovered && "translate-x-0.5"
-          )}
-        >
-          <path d="M0.500105 5.75008L0.5 4.25015H12.6289L9.66665 1.28783L10.7273 0.227173L15.5003 5.00015L10.7273 9.77315L9.66665 8.71243L12.629 5.75015L0.500105 5.75008Z" fill="#0C0000"/>
-        </svg>
-      </div>
+      <ViewButton
+        href={    item.href}
+        className='bg-black/20 flex-shrink-0'
+        isHovered={isHovered}
+        label="View"
+      />
     </Link>
   );
 };
@@ -69,7 +63,7 @@ const RecentHighlights = ({
   ]
 }: RecentHighlightsProps) => {
   return (
-    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-6 rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
+    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-3 sm:p-4 md:p-6 rounded-[20px] sm:rounded-[30px] md:rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
       <style jsx global>{`
         @keyframes fadeInUp {
           from {
@@ -94,8 +88,13 @@ const RecentHighlights = ({
         inactiveZone={0.01}
       />
 
-      <BentoBadge icon={Medal} text="RECENT HIGHLIGHTS" className='mx-auto'/>
-      <div className="py-3 flex flex-col gap-3">
+      <BentoBadge 
+        icon={Medal} 
+        text={title} 
+        className='mx-auto text-xs sm:text-sm md:text-base'
+      />
+      
+      <div className="py-2 sm:py-3 flex flex-col gap-2 sm:gap-3">
         {highlights.map((item, index) => (
           <HighlightCard key={index} item={item} index={index} />
         ))}
