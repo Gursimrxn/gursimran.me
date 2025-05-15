@@ -3,9 +3,9 @@
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes';
 import * as React from 'react';
-import SmoothScrollProvider from './components/SmoothScrollProvider';
+import SmoothScrollProvider from './SmoothScrollProvider';
 
-export function Providers({ children }: ThemeProviderProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
 	return (
 		<NextThemesProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
 			<SmoothScrollProvider>
