@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { throttle } from "@/lib/utils";
 import { scrollToTop } from "@/lib/scroll";
-import { lenisManager } from "@/lib/lenisManager";
 
 const Navbar = () => {
     // Set initial state to false (not scrolled) to match the logic

@@ -14,8 +14,15 @@ export function useLenis(options: {
   easing?: (t: number) => number;
   wheelMultiplier?: number;
   smoothWheel?: boolean;
+  smoothTouch?: boolean;
+  syncTouch?: boolean;
+  touchMultiplier?: number;
+  gestureOrientation?: 'vertical' | 'horizontal' | 'both';
   enabled?: boolean;
-  [key: string]: any;
+  lerp?: number;
+  infinite?: boolean;
+  orientation?: 'vertical' | 'horizontal';
+  autoResize?: boolean;
 } = {}) {
   const lenisRef = useRef<Lenis | null>(null);
   const { enabled = true, ...lenisOptions } = options;
