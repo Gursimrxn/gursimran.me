@@ -177,7 +177,8 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             scrollbar-color: #FFA116 transparent;
           }
         `}</style>
-        <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">          <HeatMap
+        <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
+          <HeatMap
             {...getDateProps()}
             className="w-full mx-auto"
             onMouseLeave={() => {

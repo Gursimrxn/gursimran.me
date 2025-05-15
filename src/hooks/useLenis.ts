@@ -19,8 +19,7 @@ export function useLenis(options: {
 } = {}) {
   const lenisRef = useRef<Lenis | null>(null);
   const { enabled = true, ...lenisOptions } = options;
-  
-  useEffect(() => {
+    useEffect(() => {
     // Only initialize Lenis if enabled
     if (!enabled) {
       // Clean up any existing instance
@@ -32,27 +31,30 @@ export function useLenis(options: {
       return;
     }
     
-    // Initialize Lenis with original smooth settings
+    // Initialize Lenis with original smooth settings - set immediateScroll to true
     const lenis = new Lenis({
       duration: 1.2,           // Original duration
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Original easing function
       wheelMultiplier: 1.0,    // Original wheel multiplier
       smoothWheel: true,       // Enable smooth wheel scrolling
+      syncTouch: true,
       ...lenisOptions,         // Override with user options
     });
 
-    // Store the instance in the ref and global manager
+    // Store the instance in the ref and global manager immediately
     lenisRef.current = lenis;
     lenisManager.setLenisInstance(lenis);
 
-    // Animation frame update function
+    // Animation frame update function with high priority
     function raf(time: number) {
-      lenis.raf(time);
+      if (lenisRef.current) {
+        lenisRef.current.raf(time);
+      }
       requestAnimationFrame(raf);
     }
 
-    // Start the animation loop
-    requestAnimationFrame(raf);
+    // Start the animation loop immediately
+    raf(performance.now());
 
     // Clean up on unmount
     return () => {

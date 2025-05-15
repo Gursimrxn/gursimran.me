@@ -24,13 +24,24 @@ class LenisManager {
   }
   /**
    * Set the Lenis instance
-   */
-  public setLenisInstance(lenis: Lenis | null): void {
+   */  public setLenisInstance(lenis: Lenis | null): void {
+    // Clean up existing instance listeners if there is one
+    if (this.lenisInstance) {
+      this.lenisInstance.off('scroll', this.onScroll.bind(this));
+    }
+    
     this.lenisInstance = lenis;
     
     // Set up scroll event to track scrolling state if Lenis exists
     if (lenis) {
+      // Add scroll event listener
       lenis.on('scroll', this.onScroll.bind(this));
+      
+      // Force lenis to update immediately to handle any scroll that happened during initialization
+      // Instead of using the private emit method, we'll manually trigger a scroll update
+      requestAnimationFrame(() => {
+        if (lenis) lenis.raf(performance.now());
+      });
     }
   }
   /**

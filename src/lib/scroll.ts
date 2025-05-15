@@ -17,32 +17,50 @@ export function scrollTo(
     immediate?: boolean;
   } = {}
 ) {
+  // Try to get Lenis instance
   const lenis = lenisManager.getLenis();
   
+  // Add a small delay to ensure Lenis is properly initialized
   if (lenis) {
-    // Use Lenis scrolling if available
-    lenisManager.scrollTo(target, options);
+    try {
+      // Use Lenis scrolling if available
+      lenisManager.scrollTo(target, options);
+    } catch (err) {
+      console.warn('Lenis scroll failed, falling back to native scroll:', err);
+      fallbackToNativeScroll(target, options);
+    }
   } else {
     // Fall back to native scrolling
-    let targetElement: HTMLElement | null = null;
-    let targetPosition = 0;
-    
-    if (typeof target === 'string') {
-      targetElement = document.querySelector(target);
-      if (targetElement) {
-        targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + (options.offset || 0);
-      }
-    } else if (target instanceof HTMLElement) {
-      targetPosition = target.getBoundingClientRect().top + window.scrollY + (options.offset || 0);
-    } else if (typeof target === 'number') {
-      targetPosition = target;
-    }
-    
-    window.scrollTo({
-      top: targetPosition,
-      behavior: options.immediate ? 'auto' : 'smooth'
-    });
+    fallbackToNativeScroll(target, options);
   }
+}
+
+// Helper function for native scrolling
+function fallbackToNativeScroll(
+  target: string | HTMLElement | number,
+  options: { 
+    offset?: number; 
+    duration?: number;
+    immediate?: boolean;
+  } = {}
+) {
+  let targetElement: HTMLElement | null = null;
+  let targetPosition = 0;
+  
+  if (typeof target === 'string') {
+    targetElement = document.querySelector(target);
+    if (targetElement) {
+      targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + (options.offset || 0);
+    }
+  } else if (target instanceof HTMLElement) {
+    targetPosition = target.getBoundingClientRect().top + window.scrollY + (options.offset || 0);
+  } else if (typeof target === 'number') {
+    targetPosition = target;
+  }
+    window.scrollTo({
+    top: targetPosition,
+    behavior: options.immediate ? 'auto' : 'smooth'
+  });
 }
 
 /**
@@ -58,8 +76,17 @@ export function scrollToTop(options: { duration?: number } = {}) {
   
   const lenis = lenisManager.getLenis();
   if (lenis) {
-    // Use Lenis scrolling if available
-    lenisManager.scrollTo(0, { ...defaultOptions, ...options });
+    try {
+      // Use Lenis scrolling if available
+      lenisManager.scrollTo(0, { ...defaultOptions, ...options });
+    } catch (err) {
+      // Fall back to native scrolling if Lenis fails
+      console.warn('Lenis scrollToTop failed, falling back to native scroll:', err);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   } else {
     // Fall back to native scrolling
     window.scrollTo({

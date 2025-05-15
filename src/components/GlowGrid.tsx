@@ -2,6 +2,7 @@
 
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import TypingSpeed from "./TypingSpeed";
+import RecentHighlights from "./RecentHighlights";
 
 export function GlowingCardGrid() {
   return (
@@ -9,7 +10,7 @@ export function GlowingCardGrid() {
       <GridItem
         area="[grid-area:1/1/2/5] md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
       >
-      
+        <RecentHighlights />
       </GridItem>
       <GridItem
         area="[grid-area:1/5/2/8] md:[grid-area:2/1/3/7] xl:[grid-area:1/5/2/8]"

@@ -8,12 +8,46 @@ interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
-export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {  
+export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
+  // Use state with a default value from initial check
+  const [isMobile, setIsMobile] = useState(() => {
+    // Only runs on client-side
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|windows phone/.test(userAgent);
+      const isMobileWidth = width < 768;
+      return isMobileDevice || isMobileWidth;
+    }
+    return false;
+  });
+  
+  useEffect(() => {
+    // Simple mobile detection based on screen width and user agent
+    const checkMobile = () => {
+      const width = window.innerWidth;
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|windows phone/.test(userAgent);
+      const isMobileWidth = width < 768;
+      setIsMobile(isMobileDevice || isMobileWidth);
+    };
+    
+    // Check on resize
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  // Use Lenis only if not on mobile with optimized settings
   useLenis({
     duration: 1,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Original easing function
     wheelMultiplier: 1.0,
     smoothWheel: true,
+    syncTouch: true,     // Sync touch and mouse wheel events
+    smoothTouch: true,   // Enable smooth touch scrolling
+    touchMultiplier: 2,  // Better touch response
+    gestureOrientation: 'vertical', // Force vertical scrolling
+    enabled: !isMobile, // Disable on mobile
   });
   
   // Set up anchor link handling

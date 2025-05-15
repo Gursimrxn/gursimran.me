@@ -8,35 +8,38 @@ import { scrollToTop } from "@/lib/scroll";
 import { lenisManager } from "@/lib/lenisManager";
 
 const Navbar = () => {
-    const [scrolled, setScrolled] = useState(true);    // Handle scroll event with throttle for better performance
+    // Set initial state to false (not scrolled) to match the logic
+    const [scrolled, setScrolled] = useState(false);
+    
+    // Handle scroll event with throttle for better performance
     useEffect(() => {
+        // Check initial scroll position
+        if (window.scrollY > 100) {
+            setScrolled(true);
+        }
+        
         const handleScroll = throttle(() => {
-            // Only update state if not actively scrolling
-            if (!lenisManager.isScrolling()) {
-                const offset = window.scrollY;
-                if (offset > 100) {
-                    setScrolled(true);
-                } else {
-                    setScrolled(false);
-                }
+            const offset = window.scrollY;
+            if (offset > 100) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
             }
         }, 200);
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    return (
+    }, []);    return (
         <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
             <div 
                 onClick={() => scrollToTop({ duration: 1 })}
-                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-colors" ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}
+                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}
             >
                 <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
                 <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
             </div>
-            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}></div>
-            <div className={`border-1 border-black/25 rounded-full flex items-center p-2 ${scrolled ? 'backdrop-blur-md bg-white/75' : ''}`}>
+            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}></div>
+            <div className={`border-1 border-black/25 rounded-full flex items-center p-2 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}>
                 <ol className="flex gap-2 justify-center items-center">
                     <Link href="https://github.com/gursimrxn" className="border-black/50 border-1 rounded-full p-2">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" >

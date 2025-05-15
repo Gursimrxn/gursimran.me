@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar"
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import { Providers } from "@/providers";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 const urbane = localFont({
@@ -65,12 +66,12 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
       </head>
       <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
-        <SmoothScrollProvider>
+        <Providers>
           <Navbar />
           <main>{children}</main>
           <ScrollToTopButton />
           <Analytics />
-        </SmoothScrollProvider>
+        </Providers>
       </body>
     </html>
   );
