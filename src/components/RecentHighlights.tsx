@@ -21,9 +21,9 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
     <Link 
       href={item.href}
       className={cn(
-        "group flex items-center justify-between rounded-[20px] sm:rounded-[30px] border-1 border-black/10",
+        "group flex items-center justify-between rounded-[30px] border-1 border-black/10",
         "bg-[#0475F71A] hover:bg-[#0475f720]",
-        "py-3 px-4 sm:py-4 sm:px-5 md:py-5 md:px-6", // Responsive padding
+        "py-3 px-4 sm:py-4 sm:px-5", // Responsive padding
         "transition-all duration-300",
         "opacity-0 translate-y-4",
         "animate-fade-in-up"
@@ -40,7 +40,6 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
       </span>
       
       <ViewButton
-        href={    item.href}
         className='bg-black/20 flex-shrink-0'
         isHovered={isHovered}
         label="View"
@@ -63,7 +62,7 @@ const RecentHighlights = ({
   ]
 }: RecentHighlightsProps) => {
   return (
-    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-3 sm:p-4 md:p-6 rounded-[20px] sm:rounded-[30px] md:rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
+    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-4 sm:p-5 md:p-6 rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
       <style jsx global>{`
         @keyframes fadeInUp {
           from {
@@ -94,8 +93,8 @@ const RecentHighlights = ({
         className='mx-auto text-xs sm:text-sm md:text-base'
       />
       
-      <div className="py-2 sm:py-3 flex flex-col gap-2 sm:gap-3">
-        {highlights.map((item, index) => (
+      <div className="py-3 flex flex-col gap-2 sm:gap-3">
+        {highlights.map((item: HighlightItem, index: number) => (
           <HighlightCard key={index} item={item} index={index} />
         ))}
       </div>

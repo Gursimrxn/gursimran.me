@@ -1,12 +1,10 @@
 "use client"
 
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import * as motion from 'motion';
 import { useEffect, useRef } from 'react';
 
 interface ViewButtonProps {
-  href: string;
   className?: string;
   textColor?: string;
   label?: string;
@@ -14,13 +12,12 @@ interface ViewButtonProps {
 }
 
 const ViewButton = ({
-  href,
   className,
   textColor = 'text-black',
   label = 'View',
   isHovered = false
 }: ViewButtonProps) => {
-  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const animationRef = useRef<any[]>([]);
   const timeoutRef = useRef<number | null>(null);
@@ -62,10 +59,10 @@ const ViewButton = ({
         { 
           maxWidth: ['0px', '100px'],
           marginRight: ['0px', '8px'],
-          transform: ['translateX(-5px) scale(0.95)', 'translateX(0) scale(1)']
+          transform: ['translateX(-10px) scale(0.9)', 'translateX(0) scale(1)']
         } as any,
         { 
-          duration: 0.35,
+          duration: 0.25,
           easing: [0.25, 0.1, 0.25, 1.0],
           fill: 'forwards',
         } as any
@@ -106,11 +103,11 @@ const ViewButton = ({
         { 
           maxWidth: ['100px', '0px'],
           marginRight: ['8px', '0px'],
-          transform: ['translateX(0) scale(1)', 'translateX(-5px) scale(0.95)']
+          transform: ['translateX(0) scale(1)', 'translateX(-10px) scale(0.9)']
         } as any,
         { 
-          duration: 0.25,
-          easing: [0.25, 0.1, 0.25, 1.0],
+          duration: 0.20,
+          easing: [0.25, 0.1, 0.10, 1.0],
           fill: 'forwards',
         } as any
       );
@@ -137,9 +134,8 @@ const ViewButton = ({
   }, [isHovered]);
 
   return (
-    <Link
+    <div
       ref={buttonRef}
-      href={href}
       className={cn(
         "flex items-center justify-between overflow-hidden",
         "rounded-full",
@@ -149,10 +145,10 @@ const ViewButton = ({
         className
       )}
     >
-      <div className="flex-grow-0 flex-shrink-0 relative">
+      <div className="flex-grow-0 flex items-center justify-center flex-shrink-0 relative">
         <span 
           ref={textRef}
-          className="text-base font-product whitespace-nowrap opacity-0 max-w-0 mr-0 origin-left block" 
+          className="text-sm font-product whitespace-nowrap opacity-0 max-w-0 mr-0 origin-left block" 
           style={{display: 'none'}}
         >
           {label}
@@ -184,7 +180,7 @@ const ViewButton = ({
           strokeLinecap="round"
         />
       </svg>
-    </Link>
+    </div>
   );
 };
 
