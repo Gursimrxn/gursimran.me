@@ -3,7 +3,7 @@
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import TypingSpeed from "./TypingSpeed";
 import RecentHighlights from "./RecentHighlights";
-import FeaturedSection from "./FeaturedSection";
+import TechStack from "./TechStack";
 
 export function GlowingCardGrid() {
   return (
@@ -21,7 +21,7 @@ export function GlowingCardGrid() {
       <GridItem
         area="[grid-area:2/1/3/8] md:[grid-area:1/7/3/13] xl:[grid-area:1/8/2/13]"
       >
-        <FeaturedSection />
+        <TechStack />
       </GridItem>
     </ul>
   );
@@ -41,7 +41,7 @@ const GridItem = ({ area, children }: GridItemProps) => {
       transition-all duration-500 ease-out
       sm:shadow-sm
     `}>
-      <div className="relative h-full w-full rounded-[40px] border-1 border-black/10 
+      <div className="relative h-full w-full rounded-[40px] border-1 border-black/25 
         bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]
         transition-all duration-500
       ">

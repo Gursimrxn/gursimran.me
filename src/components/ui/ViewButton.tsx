@@ -4,19 +4,35 @@
 import { cn } from '@/lib/utils';
 import * as motion from 'motion';
 import { useEffect, useRef } from 'react';
+import { RightArrow } from '../icons/RightArrow';
+import { Magnetic } from './MagneticButton';
 
-interface ViewButtonProps {
+interface ViewButtonProps {  
   className?: string;
   textColor?: string;
   label?: string;
   isHovered?: boolean;
+  magneticEffect?: boolean;
+  magneticIntensity?: number;
+  magneticRange?: number;
+  magneticActionArea?: 'self' | 'parent' | 'global';
+  magneticSpringOptions?: {
+    stiffness?: number;
+    damping?: number;
+    mass?: number;
+  };
 }
 
 const ViewButton = ({
   className,
   textColor = 'text-black',
   label = 'View',
-  isHovered = false
+  isHovered = false,
+  magneticEffect = true,
+  magneticIntensity = 0.4,
+  magneticRange = 60,
+  magneticActionArea = 'parent',
+  magneticSpringOptions = { stiffness: 150, damping: 15, mass: 0.1 }
 }: ViewButtonProps) => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
@@ -132,56 +148,63 @@ const ViewButton = ({
         timeoutRef.current = null;
       }
     };
-  }, [isHovered]);
-
-  return (
-    <div
-      ref={buttonRef}
-      className={cn(
-        "flex items-center justify-between overflow-hidden",
-        "rounded-full",
-        "py-1.5 px-3",
-        "bg-orange-500 transition-colors",
-        textColor,
-        className
-      )}
-    >
-      <div className="flex-grow-0 flex items-center justify-center flex-shrink-0 relative">
-        <span 
-          ref={textRef}
-          className="text-sm font-product whitespace-nowrap opacity-0 max-w-0 mr-0 origin-left block" 
-          style={{display: 'none'}}
-        >
-          {label}
-        </span>
-      </div>
-      
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="flex-shrink-0 ml-0"
+  }, [isHovered]);  return (
+    magneticEffect ? (
+      <Magnetic 
+        intensity={magneticIntensity} 
+        range={magneticRange} 
+        actionArea={magneticActionArea}
+        springOptions={magneticSpringOptions}
       >
-        <path 
-          d="M13 6l6 6-6 6" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-        />
-        <line 
-          x1="5" 
-          y1="12" 
-          x2="19" 
-          y2="12" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round"
-        />
-      </svg>
-    </div>
+        <div
+          ref={buttonRef}
+          className={cn(
+            "flex items-center justify-between overflow-hidden",
+            "rounded-full",
+            "py-1.5 px-3 min-h-[2rem] min-w-[2rem]",
+            "bg-orange-500 transition-colors",
+            textColor,
+            className
+          )}
+        >
+          <div className="flex-grow-0 flex items-center justify-center flex-shrink-0 relative">
+            <span 
+              ref={textRef}
+              className="text-sm font-product whitespace-nowrap opacity-0 max-w-0 mr-0 origin-left block" 
+              style={{display: 'none'}}
+            >
+              {label}
+            </span>
+          </div>
+          
+          <RightArrow className="ml-1 w-4 h-4" />
+        </div>
+      </Magnetic>
+    ) : (
+      <div
+        ref={buttonRef}
+        className={cn(
+          "flex items-center justify-between overflow-hidden",
+          "rounded-full",
+          "py-1.5 px-3 min-h-[2rem] min-w-[2rem]",
+          "bg-orange-500 transition-colors",
+          textColor,
+          className
+        )}
+      >
+        <div className="flex-grow-0 flex items-center justify-center flex-shrink-0 relative">
+          <span 
+            ref={textRef}
+            className="text-sm font-product whitespace-nowrap opacity-0 max-w-0 mr-0 origin-left block" 
+            style={{display: 'none'}}
+          >
+            {label}
+          </span>
+        </div>
+        
+        <RightArrow className="ml-1 w-4 h-4" />
+      </div>
+    )
   );
 };
 

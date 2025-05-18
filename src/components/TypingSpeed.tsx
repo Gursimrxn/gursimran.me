@@ -6,6 +6,7 @@ import { Timer } from '@/components/icons/Timer';
 import type { MonkeyTypeData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
 import { Translate } from './icons/Translate';
+import Link from 'next/link';
 
 const mapTypingDetailData = (data: MonkeyTypeData) => {
   return [
@@ -36,7 +37,7 @@ export const TypingDetail = ({
 const TypingSpeed = (props: MonkeyTypeData) => {
   
   return (
-    <a
+    <Link
       href='https://monkeytype.com/profile/gursimrxn'
       target='_blank'
       rel="noopener noreferrer"
@@ -65,7 +66,7 @@ const TypingSpeed = (props: MonkeyTypeData) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
