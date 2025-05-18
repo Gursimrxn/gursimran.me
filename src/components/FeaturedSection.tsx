@@ -1,4 +1,3 @@
-import { div } from "motion/react-client"
 import BentoBadge from "./ui/BentoBadge"
 import { Medal } from "./icons/Medal"
 
