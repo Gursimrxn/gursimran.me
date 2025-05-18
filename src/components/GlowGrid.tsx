@@ -3,6 +3,7 @@
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import TypingSpeed from "./TypingSpeed";
 import RecentHighlights from "./RecentHighlights";
+import FeaturedSection from "./FeaturedSection";
 
 export function GlowingCardGrid() {
   return (
@@ -20,7 +21,7 @@ export function GlowingCardGrid() {
       <GridItem
         area="[grid-area:2/1/3/8] md:[grid-area:1/7/3/13] xl:[grid-area:1/8/2/13]"
       >
-
+        <FeaturedSection />
       </GridItem>
     </ul>
   );
@@ -32,11 +33,9 @@ interface GridItemProps {
 }
 
 const GridItem = ({ area, children }: GridItemProps) => {
-  const isTallCard = area.includes("1/7/3/13");
   const isSmThirdItem = area.includes("sm:[grid-area:2/1/3/8]");
   
   return (    <li className={`
-      ${isTallCard ? 'md:min-h-[30rem] xl:min-h-0' : 'min-h-[10rem]'}
       ${isSmThirdItem ? 'sm:min-h-[15rem]' : ''}
       list-none ${area} xl:h-full rounded-[40px] cursor-pointer 
       transition-all duration-500 ease-out

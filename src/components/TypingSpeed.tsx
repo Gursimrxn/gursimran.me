@@ -40,7 +40,7 @@ const TypingSpeed = (props: MonkeyTypeData) => {
       href='https://monkeytype.com/profile/gursimrxn'
       target='_blank'
       rel="noopener noreferrer"
-      className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden rounded-[15px] sm:rounded-[30px] md:rounded-[40px] p-6'
+      className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden rounded-[40px] p-6'
     >
       <BentoBadge
         icon={Monkeytype}

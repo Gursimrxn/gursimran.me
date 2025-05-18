@@ -80,7 +80,7 @@ export default function LandingPage() {
             <LeetCodeActivitySection />
           </Suspense>
         </div>
-        <GlowingCardGrid/>
+        <GlowingCardGrid />
       </div>
     </main>
   );
