@@ -4,8 +4,10 @@ import BentoBadge from "@/components/ui/BentoBadge";
 import { Medal } from "@/components/icons/Medal";
 import ViewButton from "@/components/ui/ViewButton";
 import Link from "next/link";
+import Image from "next/image";
 import { RightArrow } from "@/components/icons/RightArrow";
 import { useState } from "react";
+import { GlowingEffect } from "@/components/ui/GlowingEffect";
 
 interface FeatureItemProps {
     title: string;
@@ -31,26 +33,41 @@ const FeatureItem = ({
                 ${
                     hovered
                         ? "from-[#FBEEE1] to-[#FBE5D5]"
-                        : "from-[#FCFCFC] to-[#FFFEFA]"
+                        : "from-[#ffffff] to-[#fcfcfc]"
                 } 
-                 cursor-pointer select-none p-3 overflow-hidden flex flex-col transition-colors duration-300 ease-in-out`}
+                cursor-pointer select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            <div className="relative flex justify-center mb-4 h-[300px]">
+            <GlowingEffect
+                spread={25}
+                borderWidth={1}
+                glow={true}
+                disabled={false}
+                proximity={40}
+                inactiveZone={0.01}
+            />
+            <div className="relative flex justify-center mb-4 h-[300px] overflow-hidden rounded-[30px]">
                 {badge && (
                     <div className="absolute top-3 right-3 z-10 bg-black text-white text-sm font-product px-3 py-2 rounded-full">
                         {badge}
                     </div>
                 )}
-                <img
+                <Image
                     src={imageURL}
                     alt={title}
-                    className="w-full h-full rounded-[30px] object-cover"
+                    width={600}
+                    height={300}
+                    className={`w-full h-full rounded-[30px] object-cover transition-transform duration-300 ease-in-out ${
+                        hovered ? "scale-105" : ""
+                    }`}
+                    priority
                 />
             </div>
             <div className="px-4 mb-4">
-                <div className="flex items-center justify-between">                    <h3 className="text-lg font-semibold mb-2">{title}</h3>                    <ViewButton
+                <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                    <ViewButton
                         label="View"
                         isHovered={hovered}
                         textColor="text-white"
@@ -91,7 +108,15 @@ const defaultItems: FeatureItemProps[] = [
 
 const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
     return (
-        <div className="relative w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA] p-6 overflow-hidden">
+        <div className="relative w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#ffffff] to-[#fcfcfc] p-6">
+            <GlowingEffect
+                spread={25}
+                borderWidth={1}
+                glow={true}
+                disabled={false}
+                proximity={40}
+                inactiveZone={0.01}
+            />
             <div className="flex justify-between items-center pb-6">
                 <BentoBadge icon={Medal} text="FEATURED PROJECTS" />
                 <Link
@@ -103,7 +128,7 @@ const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
                 {items.map((item) => (
                     <FeatureItem key={item.title} {...item} />
                 ))}

@@ -8,7 +8,6 @@ import getGithubContributions from "@/lib/github";
 import getLeetCodeContributions from "@/lib/leetcode";
 import { GlowingCardGrid } from "@/components/GlowGrid";
 import FeaturedSection from "@/components/FeaturedSection";
-import ClickSpark from "@/components/ui/ClickSpark";
 export const revalidate = 3600;
 
 // This server component fetches the data and passes it to the client component
