@@ -8,7 +8,7 @@ interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
-export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
+export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   // Use state with a default value from initial check
   const [isMobile, setIsMobile] = useState(() => {
     // Only runs on client-side

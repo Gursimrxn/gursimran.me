@@ -1,2 +1,3 @@
-export { ThemeProvider } from './ThemeProvider';
-export { default as SmoothScrollProvider } from './SmoothScrollProvider';
+export { default as ThemeProvider } from './ThemeProvider';
+export { SmoothScrollProvider } from './SmoothScrollProvider';
+export { ClickSparkProvider } from './ClickSparkProvider';

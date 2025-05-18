@@ -3,13 +3,15 @@
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes';
 import * as React from 'react';
-import SmoothScrollProvider from './SmoothScrollProvider';
+import { SmoothScrollProvider, ClickSparkProvider } from '@/providers';
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export default function ThemeProvider({ children }: ThemeProviderProps) {
 	return (
 		<NextThemesProvider attribute="class" defaultTheme="light">
 			<SmoothScrollProvider>
-				{children}
+				<ClickSparkProvider>
+					{children}
+				</ClickSparkProvider>
 			</SmoothScrollProvider>
 		</NextThemesProvider>
 	);

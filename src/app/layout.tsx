@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "@/providers/";
+import { ThemeProvider } from "@/providers";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 const urbane = localFont({
