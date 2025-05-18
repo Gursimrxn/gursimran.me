@@ -100,12 +100,31 @@ const GlowingEffect = memo(
     useEffect(() => {
       if (disabled) return;
 
-      const handleScroll = () => handleMove();
+      const isMobile = window.innerWidth <= 568; // Common mobile breakpoint
+      const handleScroll = () => {
+        if (!isMobile) handleMove();
+      };
+
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
+      const handleResize = () => {
+        // Update isMobile value when window is resized
+        const newIsMobile = window.innerWidth <= 568;
+        if (isMobile !== newIsMobile) {
+          // Only update if the device type changed
+          if (newIsMobile) {
+            // If switching to mobile, no need to call handleMove
+          } else {
+            // If switching from mobile to desktop, update position
+            handleMove();
+          }
+        }
+      };
+
       window.addEventListener("scroll", handleScroll, { passive: true });
       document.body.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
+      window.addEventListener("resize", handleResize, { passive: true });
 
       return () => {
         if (animationFrameRef.current) {
@@ -113,6 +132,7 @@ const GlowingEffect = memo(
         }
         window.removeEventListener("scroll", handleScroll);
         document.body.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("resize", handleResize);
       };
     }, [handleMove, disabled]);
 
