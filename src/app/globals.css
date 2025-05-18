@@ -1,32 +1,17 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Urbane';
-  src: url('/Urbane-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Product Sans';
-  src: url('/Product-Sans.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  --background: #FFFCFA;
-  --foreground: #171717;
-  --font-urbane: 'Urbane', Arial, sans-serif;
-  --font-productsans: 'Product Sans', Arial, sans-serif;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-urbane);
+  font-family: var(--font-urbane), sans-serif;
+}
+
+.font-product{
+  font-family: var(--font-product), sans-serif;
+}
+
+.font-urbane{
+  font-family: var(--font-urbane), sans-serif;
 }
 
 @keyframes gradient {

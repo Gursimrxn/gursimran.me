@@ -4,20 +4,26 @@ import { Metadata } from "next";
 import { Analytics } from '@vercel/analytics/next';
 import localFont from "next/font/local";
 
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/providers/";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 const urbane = localFont({
-  src: '../../public/Urbane-Medium.ttf',
-  display: 'swap',
-  variable: '--font-urbane',
+  src: [
+    { path: "../../public/Urbane-Medium.ttf", weight: "400", style: "normal" },
+  ],
+  variable: "--font-urbane",
+  weight: "400",
+  display: "swap",
 });
 
-const productSans = localFont({
-  src: '../../public/Product-Sans.ttf',
-  display: 'swap',
-  variable: '--font-productsans',
+const product = localFont({
+  src: [
+    { path: "../../public/Product-Sans.ttf", weight: "400", style: "normal" },
+  ],
+  variable: "--font-product",
+  weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -57,14 +63,14 @@ export default function RootLayout({
 }) {
   return (
     <html 
-      lang="en" 
-      className={`${urbane.variable} ${productSans.variable}`} 
+      lang="en"
+      className={`${urbane.variable} ${product.variable} antialiased overflow-x-hidden`}
       suppressHydrationWarning={true}
     >
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="min-h-screen antialiased font-urbane overflow-x-hidden">
+      <body className={`min-h-screen`}>
         <ThemeProvider>
           <Navbar />
           <main>{children}</main>
@@ -73,5 +79,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    
   );
 }
