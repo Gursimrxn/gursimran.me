@@ -8,7 +8,7 @@ import {
   type SpringOptions,
 } from 'motion/react';
 
-const SPRING_CONFIG = { stiffness: 26.7, damping: 4.1, mass: 0.2 };
+const SPRING_CONFIG = { stiffness: 150, damping: 15, mass: 0.1 };
 
 export type MagneticProps = {
   children: React.ReactNode;
@@ -33,7 +33,6 @@ export function Magnetic({
 
   const springX = useSpring(x, springOptions);
   const springY = useSpring(y, springOptions);
-
   useEffect(() => {
     const calculateDistance = (e: MouseEvent) => {
       if (ref.current) {
@@ -46,9 +45,14 @@ export function Magnetic({
         const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
         if (isHovered && absoluteDistance <= range) {
-          const scale = 1 - absoluteDistance / range;
+          // Use a smoother easing function for more natural movement
+          const scale = Math.pow(1 - absoluteDistance / range, 1.5);
           x.set(distanceX * intensity * scale);
           y.set(distanceY * intensity * scale);
+        } else if (isHovered) {
+          // Gradually return to center if outside range but still hovered
+          x.set(0);
+          y.set(0);
         } else {
           x.set(0);
           y.set(0);
@@ -62,13 +66,16 @@ export function Magnetic({
       document.removeEventListener('mousemove', calculateDistance);
     };
   }, [ref, isHovered, intensity, range, x, y]);
-
   useEffect(() => {
     if (actionArea === 'parent' && ref.current?.parentElement) {
       const parent = ref.current.parentElement;
 
       const handleParentEnter = () => setIsHovered(true);
-      const handleParentLeave = () => setIsHovered(false);
+      const handleParentLeave = () => {
+        setIsHovered(false);
+        x.set(0);
+        y.set(0);
+      };
 
       parent.addEventListener('mouseenter', handleParentEnter);
       parent.addEventListener('mouseleave', handleParentLeave);
@@ -80,7 +87,7 @@ export function Magnetic({
     } else if (actionArea === 'global') {
       setIsHovered(true);
     }
-  }, [actionArea]);
+  }, [actionArea, x, y]);
 
   const handleMouseEnter = () => {
     if (actionArea === 'self') {

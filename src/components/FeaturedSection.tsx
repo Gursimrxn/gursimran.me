@@ -2,12 +2,12 @@
 
 import BentoBadge from "@/components/ui/BentoBadge";
 import { Medal } from "@/components/icons/Medal";
-import ViewButton from "@/components/ui/ViewButton";
 import Link from "next/link";
 import Image from "next/image";
 import { RightArrow } from "@/components/icons/RightArrow";
 import { useState } from "react";
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
+import { useCursor } from "@/providers/CursorProvider";
 
 interface FeatureItemProps {
     title: string;
@@ -26,6 +26,18 @@ const FeatureItem = ({
     badge,
 }: FeatureItemProps) => {
     const [hovered, setHovered] = useState(false);
+    const { setCursorVariant } = useCursor();
+    
+    const handleMouseEnter = () => {
+        setHovered(true);
+        setCursorVariant("viewMore");
+    };
+    
+    const handleMouseLeave = () => {
+        setHovered(false);
+        setCursorVariant("default");
+    };
+    
     return (
         <Link
             href={link}
@@ -35,9 +47,9 @@ const FeatureItem = ({
                         ? "from-[#FBEEE1] to-[#FBE5D5]"
                         : "from-[#ffffff] to-[#fcfcfc]"
                 } 
-                cursor-pointer select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+                cursor-none select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
             <GlowingEffect
                 spread={25}
@@ -63,19 +75,9 @@ const FeatureItem = ({
                     }`}
                     priority
                 />
-            </div>
-            <div className="px-4 mb-4">
+            </div>            <div className="px-4 mb-4">
                 <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold mb-2">{title}</h3>
-                    <ViewButton
-                        label="View"
-                        isHovered={hovered}
-                        textColor="text-white"
-                        magneticEffect={true}
-                        magneticRange={80}
-                        magneticActionArea="global"
-                        
-                    />
                 </div>
                 <p className="text-sm text-gray-600 truncate whitespace-normal overflow-hidden line-clamp-1">
                     {description}
