@@ -171,14 +171,22 @@ export function SmoothCursor({
         smoothMouseMove(e);
         rafId = 0;
       });
-    };
-
-    document.body.style.cursor = "none";
+    };    // Instead of setting cursor to none globally, use CSS to handle it more elegantly
+    const style = document.createElement('style');
+    style.textContent = `
+      * {
+        cursor: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
     window.addEventListener("mousemove", throttledMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
-      document.body.style.cursor = "auto";
+      if (style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, [cursorX, cursorY, rotation, scale]);
@@ -189,8 +197,8 @@ export function SmoothCursor({
         position: "fixed",
         left: cursorX,
         top: cursorY,
-        translateX: "-50%",
-        translateY: "-50%",
+        translateX: "-40%",
+        translateY: "-25%",
         rotate: rotation,
         scale: scale,
         zIndex: 100,
