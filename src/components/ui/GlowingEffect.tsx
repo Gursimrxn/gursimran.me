@@ -30,13 +30,21 @@ const GlowingEffect = memo(
     disabled = true,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const lastPosition = useRef({ x: 0, y: 0 });
-    const animationFrameRef = useRef<number>(0);
+  const lastPosition = useRef({ x: 0, y: 0 });
+  const animationFrameRef = useRef<number>(0);
+  const throttleTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-    const handleMove = useCallback(
-      (e?: MouseEvent | { x: number; y: number }) => {
-        if (!containerRef.current) return;
+  const handleMove = useCallback(
+    (e?: MouseEvent | { x: number; y: number }) => {
+      if (!containerRef.current) return;
 
+      // Clear any existing throttle timeout
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current);
+      }
+
+      // Throttle the animation frame requests
+      throttleTimeoutRef.current = setTimeout(() => {
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
@@ -91,11 +99,11 @@ const GlowingEffect = memo(
             onUpdate: (value) => {
               element.style.setProperty("--start", String(value));
             },
-          });
-        });
-      },
-      [inactiveZone, proximity, movementDuration]
-    );
+          });        });
+      }, 16); // ~60fps throttling
+    },
+    [inactiveZone, proximity, movementDuration]
+  );
 
     useEffect(() => {
       if (disabled) return;
@@ -124,11 +132,12 @@ const GlowingEffect = memo(
       document.body.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
-      window.addEventListener("resize", handleResize, { passive: true });
-
-      return () => {
+      window.addEventListener("resize", handleResize, { passive: true });      return () => {
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
+        }
+        if (throttleTimeoutRef.current) {
+          clearTimeout(throttleTimeoutRef.current);
         }
         window.removeEventListener("scroll", handleScroll);
         document.body.removeEventListener("pointermove", handlePointerMove);

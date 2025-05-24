@@ -2,7 +2,7 @@
 'use client';
 
 import HeatMap, { type SVGProps } from '@uiw/react-heat-map';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, memo } from 'react';
 import { Github } from '@/components/icons/Github';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
@@ -17,29 +17,6 @@ const getDateProps = () => {
   return { startDate: oneYearAgo, endDate: today };
 };
 
-const renderRect =
-  (handleMouseEnter: (date: string) => void): SVGProps['rectRender'] =>
-  (props, data) => {
-    const date = new Date(data.date);
-    const formattedDate =
-      date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) +
-      getDateSuffix(date.getDate());
-    const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} contributions on ${formattedDate}`;
-
-    return (
-      <rect
-        className="transition-all hover:brightness-125"
-        onMouseEnter={() => {
-          // Only update state if neither local nor global scrolling is happening
-          if (!lenisManager.isScrolling()) {
-            handleMouseEnter(tileInfo);
-          }
-        }}
-        {...props}
-      />
-    );
-  };
-
 interface Props {
   data: GithubContributionData;
 }
@@ -49,9 +26,61 @@ const BentoGithubActivity = ({ data }: Props) => {
   const [mounted, setMounted] = useState(false);
   const [hoveredTile, setHoveredTile] = useState<string>();
   const [isScrolling, setIsScrolling] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [startX, setStartX] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);  const [startX, setStartX] = useState(0);
   const [startScrollLeft, setStartScrollLeft] = useState(0);
+
+  // Throttle hover updates to reduce re-renders
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  
+  const handleTileHover = useCallback((date: string) => {
+    // Clear any pending hover update
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Only update if neither local nor global scrolling is happening
+    if (!isScrolling && !lenisManager.isScrolling()) {
+      hoverTimeoutRef.current = setTimeout(() => {
+        setHoveredTile(date);
+      }, 16); // ~60fps throttling
+    }
+  }, [isScrolling]);
+
+  const handleTileLeave = useCallback(() => {
+    // Clear any pending hover update
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Only update if neither local nor global scrolling is happening
+    if (!isScrolling && !lenisManager.isScrolling()) {
+      setHoveredTile(defaultValue);
+    }
+  }, [isScrolling, defaultValue]);
+
+  // Move renderRect inside the component
+  const renderRect = useCallback(
+    (handleMouseEnter: (date: string) => void): SVGProps['rectRender'] =>
+    (props, data) => {
+      const date = new Date(data.date);
+      const formattedDate =
+        date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) +
+        getDateSuffix(date.getDate());
+      const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} contributions on ${formattedDate}`;
+
+      return (
+        <rect
+          className="transition-all hover:brightness-125"
+          onMouseEnter={() => {
+            // Only update state if neither local nor global scrolling is happening
+            if (!lenisManager.isScrolling()) {
+              handleMouseEnter(tileInfo);
+            }
+          }}
+          {...props}
+        />
+      );
+    }, []);
 
   useEffect(() => {
     const value = `${formatNumber(data.totalContributions)} contributions in the last year`;
@@ -173,13 +202,7 @@ const BentoGithubActivity = ({ data }: Props) => {
         `}</style>
         <div className="min-w-[960px] bg-sky-100/20 rounded-[20px] pt-2 pr-6">          <HeatMap
             {...getDateProps()}
-            className="w-full mx-auto"
-            onMouseLeave={() => {
-              // Only update if neither local nor global scrolling is happening
-              if (!isScrolling && !lenisManager.isScrolling()) {
-                setHoveredTile(defaultValue);
-              }
-            }}
+            className="w-full mx-auto"            onMouseLeave={handleTileLeave}
             value={data.contributions ?? []}
             weekLabels={false}
             monthLabels={false}
@@ -188,12 +211,7 @@ const BentoGithubActivity = ({ data }: Props) => {
             style={{ color: '#fff' }}
             rectProps={{ rx: 5 }}
             rectSize={16}
-            rectRender={renderRect((date) => {
-              // Only update if neither local nor global scrolling is happening
-              if (!isScrolling && !lenisManager.isScrolling()) {
-                setHoveredTile(date);
-              }
-            })}
+            rectRender={renderRect(handleTileHover)}
             panelColors={{
               0: '#F2F6FF',
               1: '#E8EEFF',
@@ -222,4 +240,4 @@ const BentoGithubActivity = ({ data }: Props) => {
   );
 };
 
-export default BentoGithubActivity;
+export default memo(BentoGithubActivity);

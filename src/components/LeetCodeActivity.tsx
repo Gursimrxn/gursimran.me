@@ -2,7 +2,7 @@
 'use client';
 
 import HeatMap, { type SVGProps } from '@uiw/react-heat-map';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, memo } from 'react';
 import { LeetCode } from '@/components/icons/LeetCode';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
@@ -18,24 +18,6 @@ const getDateProps = () => {
   return { startDate: oneYearAgo, endDate: today };
 };
 
-const renderRect =
-  (handleMouseEnter: (date: string) => void): SVGProps['rectRender'] =>
-  (props, data) => {
-    const date = new Date(data.date);
-    const formattedDate =
-      date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) +
-      getDateSuffix(date.getDate());
-    const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} submissions on ${formattedDate}`;
-
-    return (
-      <rect
-        className="transition-all hover:brightness-125"
-        onMouseEnter={() => handleMouseEnter(tileInfo)}
-        {...props}
-      />
-    );
-  };
-
 interface Props {
   data: GithubContributionData & { leetCodeStats?: LeetCodeDetailedStats };
 }
@@ -48,6 +30,54 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
   const [startScrollLeft, setStartScrollLeft] = useState(0);
+
+  // Throttle hover updates to reduce re-renders
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  
+  const handleTileHover = useCallback((date: string) => {
+    // Clear any pending hover update
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Only update if neither local nor global scrolling is happening
+    if (!isScrolling && !lenisManager.isScrolling()) {
+      hoverTimeoutRef.current = setTimeout(() => {
+        setHoveredTile(date);
+      }, 16); // ~60fps throttling
+    }
+  }, [isScrolling]);
+
+  const handleTileLeave = useCallback(() => {
+    // Clear any pending hover update
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Only update if neither local nor global scrolling is happening
+    if (!isScrolling && !lenisManager.isScrolling()) {
+      setHoveredTile(defaultValue);
+    }
+  }, [isScrolling, defaultValue]);
+
+  // Move renderRect inside the component
+  const renderRect = useCallback(
+    (handleMouseEnter: (date: string) => void): SVGProps['rectRender'] =>
+    (props, data) => {
+      const date = new Date(data.date);
+      const formattedDate =
+        date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) +
+        getDateSuffix(date.getDate());
+      const tileInfo = `${data.count ? formatNumber(data.count) : 'No'} submissions on ${formattedDate}`;
+
+      return (
+        <rect
+          className="transition-all hover:brightness-125"
+          onMouseEnter={() => handleMouseEnter(tileInfo)}
+          {...props}
+        />
+      );
+    }, []);
 
   // Default stats if not provided
   const stats = data.leetCodeStats || {
@@ -180,13 +210,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
         <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
           <HeatMap
             {...getDateProps()}
-            className="w-full mx-auto"
-            onMouseLeave={() => {
-              // Only update if neither local nor global scrolling is happening
-              if (!isScrolling && !lenisManager.isScrolling()) {
-                setHoveredTile(defaultValue);
-              }
-            }}
+            className="w-full mx-auto"            onMouseLeave={handleTileLeave}
             value={data.contributions ?? []}
             weekLabels={false}
             monthLabels={false}
@@ -195,12 +219,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             style={{ color: '#fff' }}
             rectProps={{ rx: 5 }}
             rectSize={16}
-            rectRender={renderRect((date) => {
-              // Only update if neither local nor global scrolling is happening
-              if (!isScrolling && !lenisManager.isScrolling()) {
-                setHoveredTile(date);
-              }
-            })}
+            rectRender={renderRect(handleTileHover)}
             panelColors={{
               0: 'rgba(255, 251, 240, 0.2)', // Even more transparent for zero
               1: '#FFECD1', // Very light peach for 1 problem
@@ -236,4 +255,4 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
   );
 };
 
-export default BentoLeetCodeActivity;
+export default memo(BentoLeetCodeActivity);

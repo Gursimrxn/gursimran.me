@@ -89,13 +89,11 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
-  const [isMoving, setIsMoving] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
-  const previousAngle = useRef(0);
-  const accumulatedRotation = useRef(0);
+  const moveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const cursorX = useSpring(0, springConfig);
   const cursorY = useSpring(0, springConfig);
@@ -145,21 +143,20 @@ export function SmoothCursor({
       );
 
       cursorX.set(currentPos.x);
-      cursorY.set(currentPos.y);
-
-      if (speed > 0.05) {
+      cursorY.set(currentPos.y);      if (speed > 0.05) {
         // Remove rotation effect - keep rotation at 0
         rotation.set(0);
 
         scale.set(0.98);
-        setIsMoving(true);
 
-        const timeout = setTimeout(() => {
+        // Clear any existing timeout
+        if (moveTimeoutRef.current) {
+          clearTimeout(moveTimeoutRef.current);
+        }
+
+        moveTimeoutRef.current = setTimeout(() => {
           scale.set(1);
-          setIsMoving(false);
         }, 100);
-
-        return () => clearTimeout(timeout);
       }
     };
 
@@ -180,16 +177,17 @@ export function SmoothCursor({
     `;
     document.head.appendChild(style);
     
-    window.addEventListener("mousemove", throttledMouseMove);
-
-    return () => {
+    window.addEventListener("mousemove", throttledMouseMove);    return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
       if (style.parentNode) {
         style.parentNode.removeChild(style);
       }
       if (rafId) cancelAnimationFrame(rafId);
+      if (moveTimeoutRef.current) {
+        clearTimeout(moveTimeoutRef.current);
+      }
     };
-  }, [cursorX, cursorY, rotation, scale]);
+  }, [cursorX, cursorY, rotation, scale, isInitialized]);
 
   return (
     <motion.div
