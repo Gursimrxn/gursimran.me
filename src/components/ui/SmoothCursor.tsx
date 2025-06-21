@@ -158,9 +158,7 @@ export function SmoothCursor({
           scale.set(1);
         }, 100);
       }
-    };
-
-    let rafId: number;
+    };    let rafId: number;
     const throttledMouseMove = (e: MouseEvent) => {
       if (rafId) return;
 
@@ -168,7 +166,9 @@ export function SmoothCursor({
         smoothMouseMove(e);
         rafId = 0;
       });
-    };    // Instead of setting cursor to none globally, use CSS to handle it more elegantly
+    };
+
+    // Only hide cursor when custom cursor is active, don't override CSS cursor styles
     const style = document.createElement('style');
     style.textContent = `
       * {
@@ -177,7 +177,7 @@ export function SmoothCursor({
     `;
     document.head.appendChild(style);
     
-    window.addEventListener("mousemove", throttledMouseMove);    return () => {
+    window.addEventListener("mousemove", throttledMouseMove);return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
       if (style.parentNode) {
         style.parentNode.removeChild(style);

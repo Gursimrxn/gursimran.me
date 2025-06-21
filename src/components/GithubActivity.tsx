@@ -26,10 +26,9 @@ const BentoGithubActivity = ({ data }: Props) => {
   const [mounted, setMounted] = useState(false);
   const [hoveredTile, setHoveredTile] = useState<string>();
   const [isScrolling, setIsScrolling] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);  const [startX, setStartX] = useState(0);
-  const [startScrollLeft, setStartScrollLeft] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);  const [startX, setStartX] = useState(0);  const [startScrollLeft, setStartScrollLeft] = useState(0);
 
-  // Throttle hover updates to reduce re-renders
+  // Throttle hover updates to prevent scroll interruption
   const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   
   const handleTileHover = useCallback((date: string) => {
@@ -42,7 +41,7 @@ const BentoGithubActivity = ({ data }: Props) => {
     if (!isScrolling && !lenisManager.isScrolling()) {
       hoverTimeoutRef.current = setTimeout(() => {
         setHoveredTile(date);
-      }, 16); // ~60fps throttling
+      }, 100); // Increased timeout to prevent scroll interruption
     }
   }, [isScrolling]);
 
@@ -54,11 +53,11 @@ const BentoGithubActivity = ({ data }: Props) => {
     
     // Only update if neither local nor global scrolling is happening
     if (!isScrolling && !lenisManager.isScrolling()) {
-      setHoveredTile(defaultValue);
+      hoverTimeoutRef.current = setTimeout(() => {
+        setHoveredTile(defaultValue);
+      }, 100);
     }
-  }, [isScrolling, defaultValue]);
-
-  // Move renderRect inside the component
+  }, [isScrolling, defaultValue]);  // Optimized renderRect with throttled hover
   const renderRect = useCallback(
     (handleMouseEnter: (date: string) => void): SVGProps['rectRender'] =>
     (props, data) => {
@@ -151,14 +150,12 @@ const BentoGithubActivity = ({ data }: Props) => {
           inactiveZone={0.01}
         />
       
-      <div className="flex items-center justify-between">
-        <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
-        <p className="line-clamp-1 text-sm font-product">{hoveredTile}</p>
+      <div className="flex items-center justify-between">        <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
+        <p className="line-clamp-1 text-sm font-product cursor-text">{hoveredTile}</p>
       </div>
-      
-      <div 
+        <div 
         ref={scrollContainerRef}
-        className={`w-full overflow-x-auto overflow-y-hidden rounded-[20px] custom-scrollbar ${isScrolling ? 'cursor-grabbing active-scroll' : 'cursor-grab'}`}
+        className={`w-full overflow-x-auto overflow-y-hidden rounded-[20px] custom-scrollbar cursor-pointer ${isScrolling ? 'active-scroll' : ''}`}
         style={{ 
           touchAction: 'pan-x',
           WebkitOverflowScrolling: 'touch',

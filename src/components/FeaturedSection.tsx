@@ -30,7 +30,7 @@ const FeatureItem = ({
     
     const handleMouseEnter = () => {
         setHovered(true);
-        setCursorVariant("viewMore");
+        // Don't override cursor variant here - let automatic detection handle it
     };
     
     const handleMouseLeave = () => {
@@ -38,10 +38,9 @@ const FeatureItem = ({
         setCursorVariant("default");
     };
     
-    return (
-        <Link
+    return (        <Link
             href={link}
-            className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t
+            className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t cursor-view-more
                 ${
                     hovered
                         ? "from-[#FBEEE1] to-[#FBE5D5]"
@@ -76,8 +75,7 @@ const FeatureItem = ({
                     priority
                 />
             </div>            <div className="px-4 mb-4">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                <div className="flex items-center justify-between">                    <h3 className="text-lg font-semibold mb-2">{title}</h3>
                 </div>
                 <p className="text-sm text-gray-600 truncate whitespace-normal overflow-hidden line-clamp-1">
                     {description}
