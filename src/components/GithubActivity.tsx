@@ -9,6 +9,7 @@ import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
 import { GlowingEffect } from './ui/GlowingEffect';
 import { lenisManager } from '@/lib/lenisManager';
+import { TextMorph } from './ui/TextMorph';
 
 const getDateProps = () => {
   const today = new Date();
@@ -150,8 +151,11 @@ const BentoGithubActivity = ({ data }: Props) => {
           inactiveZone={0.01}
         />
       
-      <div className="flex items-center justify-between">        <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
-        <p className="line-clamp-1 text-sm font-product cursor-text">{hoveredTile}</p>
+      <div className="flex items-center justify-between">
+        <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
+        <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
+          {hoveredTile || ''}
+        </TextMorph>
       </div>
         <div 
         ref={scrollContainerRef}

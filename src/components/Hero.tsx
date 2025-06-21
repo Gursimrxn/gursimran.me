@@ -19,7 +19,7 @@ const Hero = () => {
                         </linearGradient>
                         </defs>
                     </svg>
-                    <p className="text-sm font-product">Hey, I am Developer focused on not screwing up!</p>
+                    <p className="text-sm font-product cursor-pointer">Hey, I am Developer focused on not screwing up!</p>
                 </div>
             </div>
             <div>
@@ -36,7 +36,7 @@ const Hero = () => {
                 <span className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text">Singh.</span>
             </h1>
 
-            <p className="text-center mb-12 max-w-3xl m-auto text-gray-600 font-product">
+            <p className="text-center mb-12 max-w-3xl m-auto text-gray-600 font-product cursor-text">
                 I am a developer who loves to create modern web experiences. I enjoy working with Next.js, Tailwind CSS, and other modern technologies to build beautiful and functional applications.
             </p>
                 </div>

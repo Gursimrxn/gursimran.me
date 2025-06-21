@@ -10,6 +10,7 @@ import BentoBadge from './ui/BentoBadge';
 import { LeetCodeDetailedStats } from '@/lib/leetcode';
 import { GlowingEffect } from './ui/GlowingEffect';
 import { lenisManager } from '@/lib/lenisManager';
+import { TextMorph } from './ui/TextMorph';
 
 const getDateProps = () => {
   const today = new Date();
@@ -160,9 +161,11 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
           proximity={64}
           inactiveZone={0.01}
         />
-      
-      <div className="flex items-center justify-between">        <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" />
-        <p className="line-clamp-1 text-sm font-product cursor-text">{hoveredTile}</p>
+        <div className="flex items-center justify-between">
+        <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" />
+        <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
+          {hoveredTile || ''}
+        </TextMorph>
       </div>
       
       <div 
@@ -212,7 +215,8 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
         <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
           <HeatMap
             {...getDateProps()}
-            className="w-full mx-auto"            onMouseLeave={handleTileLeave}
+            className="w-full mx-auto"
+            onMouseLeave={handleTileLeave}
             value={data.contributions ?? []}
             weekLabels={false}
             monthLabels={false}

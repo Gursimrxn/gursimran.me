@@ -234,12 +234,13 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
         setCursorVariant("viewMore");
         return;
       }
-      
-      // Check for text cursor elements (only for actual input elements, not text content)
+        // Check for text cursor elements (only for actual input elements, not text content)
       if (
         (target.tagName === 'INPUT' && (target as HTMLInputElement).type === 'text') ||
         target.tagName === 'TEXTAREA' ||
-        target.contentEditable === 'true'
+        target.contentEditable === 'true' ||
+        target.classList.contains('cursor-text') ||
+        target.closest('.cursor-text')
       ) {
         setCursorVariant("text");
         return;
