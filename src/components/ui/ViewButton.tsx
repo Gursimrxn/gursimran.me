@@ -64,45 +64,48 @@ const ViewButton = ({
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
-    }
-
-    if (isHovered) {
-      // Ensure text is displayed before animation starts
-      textRef.current.style.display = 'inline-block'; 
-      
-      // First animation: expand width with transform
-      const sizeAnim = motion.animate(
-        textRef.current,
-        { 
-          maxWidth: ['0px', '100px'],
-          marginRight: ['0px', '8px'],
-          transform: ['translateX(-10px) scale(0.9)', 'translateX(0) scale(1)']
-        } as any,
-        { 
-          duration: 0.25,
-          easing: [0.25, 0.1, 0.25, 1.0],
-          fill: 'forwards',
-        } as any
-      );
-      
-      // Second animation: fade in with slight delay
+    }    if (isHovered) {
+      // Add a small delay before starting the animation
       timeoutRef.current = window.setTimeout(() => {
         if (!isMountedRef.current || !textRef.current) return;
         
-        const opacityAnim = motion.animate(
+        // Ensure text is displayed before animation starts
+        textRef.current.style.display = 'inline-block'; 
+        
+        // First animation: expand width with transform
+        const sizeAnim = motion.animate(
           textRef.current,
-          { opacity: [0, 1] } as any,
+          { 
+            maxWidth: ['0px', '100px'],
+            marginRight: ['0px', '8px'],
+            transform: ['translateX(-10px) scale(0.9)', 'translateX(0) scale(1)']
+          } as any,
           { 
             duration: 0.25,
-            easing: 'ease-out',
+            easing: [0.25, 0.1, 0.25, 1.0],
             fill: 'forwards',
           } as any
         );
-        animationRef.current.push(opacityAnim);
-      }, 50);
-      
-      animationRef.current.push(sizeAnim);
-    } else {
+        
+        // Second animation: fade in with slight delay
+        const opacityTimeout = window.setTimeout(() => {
+          if (!isMountedRef.current || !textRef.current) return;
+          
+          const opacityAnim = motion.animate(
+            textRef.current,
+            { opacity: [0, 1] } as any,
+            { 
+              duration: 0.25,
+              easing: 'ease-out',
+              fill: 'forwards',
+            } as any
+          );
+          animationRef.current.push(opacityAnim);
+        }, 50);
+        
+        animationRef.current.push(sizeAnim);
+      }, 150); // Add 150ms delay before showing
+    }else {
       // First animation: fade out
       const opacityAnim = motion.animate(
         textRef.current,

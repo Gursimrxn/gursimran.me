@@ -89,14 +89,13 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
+  const [cursorPosition, setCursorPosition] = useState<Position>({ x: 0, y: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
   const moveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const cursorX = useSpring(0, springConfig);
-  const cursorY = useSpring(0, springConfig);
   const rotation = useSpring(0, {
     ...springConfig,
     damping: 30,
@@ -107,11 +106,11 @@ export function SmoothCursor({
     stiffness: 800,
     damping: 20,
   });
+
   useEffect(() => {
     const initializeCursor = (e: MouseEvent) => {
       if (!isInitialized) {
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
+        setCursorPosition({ x: e.clientX, y: e.clientY });
         lastMousePos.current = { x: e.clientX, y: e.clientY };
         setIsInitialized(true);
       }
@@ -142,8 +141,10 @@ export function SmoothCursor({
         Math.pow(velocity.current.x, 2) + Math.pow(velocity.current.y, 2),
       );
 
-      cursorX.set(currentPos.x);
-      cursorY.set(currentPos.y);      if (speed > 0.05) {
+      // Raw cursor position - no spring animation
+      setCursorPosition(currentPos);
+
+      if (speed > 0.05) {
         // Remove rotation effect - keep rotation at 0
         rotation.set(0);
 
@@ -158,7 +159,9 @@ export function SmoothCursor({
           scale.set(1);
         }, 100);
       }
-    };    let rafId: number;
+    };
+
+    let rafId: number;
     const throttledMouseMove = (e: MouseEvent) => {
       if (rafId) return;
 
@@ -177,7 +180,9 @@ export function SmoothCursor({
     `;
     document.head.appendChild(style);
     
-    window.addEventListener("mousemove", throttledMouseMove);return () => {
+    window.addEventListener("mousemove", throttledMouseMove);
+
+    return () => {
       window.removeEventListener("mousemove", throttledMouseMove);
       if (style.parentNode) {
         style.parentNode.removeChild(style);
@@ -187,14 +192,18 @@ export function SmoothCursor({
         clearTimeout(moveTimeoutRef.current);
       }
     };
-  }, [cursorX, cursorY, rotation, scale, isInitialized]);
+  }, [rotation, scale, isInitialized]);
+
+  if (!isInitialized) {
+    return null;
+  }
 
   return (
     <motion.div
       style={{
         position: "fixed",
-        left: cursorX,
-        top: cursorY,
+        left: cursorPosition.x,
+        top: cursorPosition.y,
         translateX: "-40%",
         translateY: "-25%",
         rotate: rotation,
