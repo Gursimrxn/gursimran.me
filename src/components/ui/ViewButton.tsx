@@ -86,9 +86,8 @@ const ViewButton = ({
             fill: 'forwards',
           } as any
         );
-        
-        // Second animation: fade in with slight delay
-        const opacityTimeout = window.setTimeout(() => {
+          // Second animation: fade in with slight delay
+        setTimeout(() => {
           if (!isMountedRef.current || !textRef.current) return;
           
           const opacityAnim = motion.animate(
