@@ -7,7 +7,6 @@ import Image from "next/image";
 import { RightArrow } from "@/components/icons/RightArrow";
 import { useState } from "react";
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
-import { useCursor } from "@/providers/CursorProvider";
 
 interface FeatureItemProps {
     title: string;
@@ -26,27 +25,26 @@ const FeatureItem = ({
     badge,
 }: FeatureItemProps) => {
     const [hovered, setHovered] = useState(false);
-    const { setCursorVariant } = useCursor();
     
     const handleMouseEnter = () => {
         setHovered(true);
-        // Don't override cursor variant here - let automatic detection handle it
+        // Cursor is now handled automatically via CSS class cursor-view-more
     };
     
     const handleMouseLeave = () => {
         setHovered(false);
-        setCursorVariant("default");
+        // Cursor will revert automatically when leaving the element
     };
     
     return (        <Link
             href={link}
-            className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t cursor-view-more
+            className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t 
                 ${
                     hovered
                         ? "from-[#FBEEE1] to-[#FBE5D5]"
                         : "from-[#ffffff] to-[#fcfcfc]"
                 } 
-                cursor-none select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
+                select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -128,7 +126,7 @@ const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
                 </Link>
             </div>
 
-            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 cursor-view-more cursor-none">
                 {items.map((item) => (
                     <FeatureItem key={item.title} {...item} />
                 ))}

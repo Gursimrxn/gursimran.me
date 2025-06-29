@@ -85,7 +85,7 @@ export default function ScrollToTopButton({
         "fixed transition-all duration-300 rounded-full border border-black/20 bg-white/90 backdrop-blur-sm shadow-md z-50",
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none",
         "hover:bg-white hover:shadow-lg hover:scale-110 active:scale-95",
-        "focus:outline-none",
+        "focus:outline-none cursor-pointer",
         className
       )}
       style={{

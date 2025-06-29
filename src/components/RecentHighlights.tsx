@@ -26,7 +26,7 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
         "py-3 px-4 sm:py-4 sm:px-5", // Responsive padding
         "transition-all duration-300",
         "opacity-0 translate-y-4",
-        "animate-fade-in-up"
+        "animate-fade-in-up cursor-pointer"
       )}
       style={{ animationDelay: `${index * 100}ms` }}
       aria-label={item.title}
