@@ -1,11 +1,11 @@
 "use client";
 
-import { Monkeytype } from '@/components/icons/Monkeytype';
-import { Target } from '@/components/icons/Target';
-import { Timer } from '@/components/icons/Timer';
+import { Monkeytype } from '@/components/icons';
+import { Target } from '@/components/icons';
+import { Timer } from '@/components/icons';
 import type { MonkeyTypeData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
-import { Translate } from './icons/Translate';
+import { Translate } from './icons';
 import Link from 'next/link';
 
 const mapTypingDetailData = (data: MonkeyTypeData) => {
@@ -40,7 +40,7 @@ const TypingSpeed = (props: MonkeyTypeData) => {
       href='https://monkeytype.com/profile/gursimrxn'
       target='_blank'
       rel="noopener noreferrer"
-      className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden rounded-[40px] bg-gradient-to-b from-white to-[#fcfcfc] p-6 cursor-pointer'
+      className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden rounded-[40px] bg-gradient-to-b from-white to-[#fcfcfc] p-4 cursor-pointer'
     >
       <BentoBadge
         icon={Monkeytype}

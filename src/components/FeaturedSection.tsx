@@ -1,12 +1,12 @@
 "use client";
 
 import BentoBadge from "@/components/ui/BentoBadge";
-import { Medal } from "@/components/icons/Medal";
 import Link from "next/link";
 import Image from "next/image";
-import { RightArrow } from "@/components/icons/RightArrow";
+import { RightArrow } from "@/components/icons";
 import { useState } from "react";
 import { GlowingEffect } from "@/components/ui/GlowingEffect";
+import { Suitcase } from "./icons";
 
 interface FeatureItemProps {
     title: string;
@@ -106,7 +106,7 @@ const defaultItems: FeatureItemProps[] = [
 
 const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
     return (
-        <div className="relative w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#ffffff] to-[#fcfcfc] p-6">
+        <div className="relative w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#ffffff] to-[#fcfcfc] p-4">
             <GlowingEffect
                 spread={25}
                 borderWidth={1}
@@ -115,8 +115,8 @@ const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
                 proximity={40}
                 inactiveZone={0.01}
             />
-            <div className="flex justify-between items-center pb-6">
-                <BentoBadge icon={Medal} text="FEATURED PROJECTS" />
+            <div className="flex justify-between items-center pb-6 p-2">
+                <BentoBadge icon={Suitcase} text="FEATURED PROJECTS" />
                 <Link
                     href="/projects"
                     className="text-orange-500 text-base font-product flex items-center hover:underline"
@@ -126,7 +126,7 @@ const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
                 </Link>
             </div>
 
-            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 cursor-view-more cursor-none">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 cursor-view-more cursor-none">
                 {items.map((item) => (
                     <FeatureItem key={item.title} {...item} />
                 ))}

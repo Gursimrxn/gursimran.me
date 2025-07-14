@@ -4,7 +4,7 @@
 import { cn } from '@/lib/utils';
 import * as motion from 'motion';
 import { useEffect, useRef } from 'react';
-import { RightArrow } from '../icons/RightArrow';
+import { RightArrow } from '../icons';
 import { Magnetic } from './MagneticButton';
 
 interface ViewButtonProps {  

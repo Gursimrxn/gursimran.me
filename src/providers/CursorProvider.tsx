@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useRef, useEffect } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "motion/react";
-import { RightArrow } from "@/components/icons/RightArrow";
+import { RightArrow } from "@/components/icons";
 
 interface CursorContextType {
   setShowViewMore: (show: boolean) => void;

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Medal } from "@/components/icons/Medal";
+import { Medal } from "@/components/icons";
 import BentoBadge from "@/components/ui/BentoBadge";
 import { GlowingEffect } from '@/components/ui/GlowingEffect';
 import { cn } from '@/lib/utils';
@@ -62,7 +62,7 @@ const RecentHighlights = ({
   ]
 }: RecentHighlightsProps) => {
   return (
-    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-4 sm:p-5 md:p-6 rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
+    <div className='group relative select-none flex h-full w-full flex-col justify-between overflow-hidden p-4 rounded-[40px] bg-gradient-to-b from-[#ffffff] to-[#fcfcfc]'>
       <style jsx global>{`
         @keyframes fadeInUp {
           from {

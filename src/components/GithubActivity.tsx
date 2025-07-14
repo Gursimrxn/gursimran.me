@@ -3,7 +3,7 @@
 
 import HeatMap, { type SVGProps } from '@uiw/react-heat-map';
 import React, { useEffect, useState, useRef, useCallback, memo } from 'react';
-import { Github } from '@/components/icons/Github';
+import { Github } from '@/components/icons';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
@@ -134,14 +134,14 @@ const BentoGithubActivity = ({ data }: Props) => {
 
   if (!mounted) {
     return (
-      <div className="relative flex h-[270px] flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6">
+      <div className="relative flex h-[270px] flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-4">
         {/* ... (keep loading state same) ... */}
       </div>
     );
   }
 
   return (
-    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6 pointer-events-auto">
+    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-4 pointer-events-auto">
       <GlowingEffect
           spread={25}
           borderWidth={1}
@@ -151,7 +151,7 @@ const BentoGithubActivity = ({ data }: Props) => {
           inactiveZone={0.01}
         />
       
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-2">
         <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
         <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
           {hoveredTile || ''}
@@ -225,7 +225,7 @@ const BentoGithubActivity = ({ data }: Props) => {
         </div>
       </div>
       
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-2">
         <div className="flex items-center gap-2">
           <div className="flex gap-1 items-center">
             <span className="h-3 w-3 rounded-full bg-[#E8EEFF]"></span>

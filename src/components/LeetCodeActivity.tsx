@@ -3,7 +3,7 @@
 
 import HeatMap, { type SVGProps } from '@uiw/react-heat-map';
 import React, { useEffect, useState, useRef, useCallback, memo } from 'react';
-import { LeetCode } from '@/components/icons/LeetCode';
+import { LeetCode } from '@/components/icons';
 import { formatNumber, getDateSuffix } from '@/lib/utils';
 import type { GithubContributionData } from '@/types';
 import BentoBadge from './ui/BentoBadge';
@@ -146,14 +146,14 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
 
   if (!mounted) {
     return (
-      <div className="relative flex h-[270px] flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6">
+      <div className="relative flex h-[270px] flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-4">
         {/* Loading state */}
       </div>
     );
   }
 
   return (
-    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-6 pointer-events-auto">
+    <div className="relative h-[270px] flex w-full flex-col justify-between rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] p-4 pointer-events-auto">
       <GlowingEffect
           spread={40}
           glow={true}
@@ -161,7 +161,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
           proximity={64}
           inactiveZone={0.01}
         />
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-2">
         <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" />
         <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
           {hoveredTile || ''}
@@ -243,7 +243,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
         </div>
       </div>
       
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-2">
         <div className="flex items-center gap-2">
           <div className="flex gap-1 items-center">
             <span className="h-3 w-3 rounded-full bg-[#FFECD1]"></span>
