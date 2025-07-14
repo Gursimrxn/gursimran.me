@@ -8,6 +8,7 @@ import getGithubContributions from "@/lib/github";
 import getLeetCodeContributions from "@/lib/leetcode";
 import { GlowingCardGrid } from "@/components/GlowGrid";
 import FeaturedSection from "@/components/FeaturedSection";
+import AboutMe from "@/components/AboutMe";
 export const revalidate = 3600;
 
 // This server component fetches the data and passes it to the client component
@@ -82,7 +83,10 @@ export default function LandingPage() {
           </Suspense>
         </div>
         <GlowingCardGrid />
-      <FeaturedSection />
+        
+        <FeaturedSection />
+        
+        <AboutMe />
       </div>
       </main>
   );

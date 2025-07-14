@@ -39,7 +39,6 @@ const GridItem = ({ area, children }: GridItemProps) => {
       ${isSmThirdItem ? 'sm:min-h-[15rem]' : ''}
       list-none ${area} xl:h-full rounded-[40px] cursor-pointer 
       transition-all duration-500 ease-out
-      sm:shadow-sm
     `}>
       <div className="relative h-full w-full rounded-[40px] border-1 border-black/25 
         bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]

@@ -1,3 +1,4 @@
+"use client"
 import BentoBadge from "./ui/BentoBadge"
 import { User } from "@/components/icons"
 
