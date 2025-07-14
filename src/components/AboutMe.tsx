@@ -29,7 +29,7 @@ const AboutMe = () => {
                     >
                         “The harder you work, the luckier you get.”
                     </h2>
-                    <p>I'm Gursimran Singh from <span className="bg-gradient-to-r from-[#FF7A01] via-75% to-[#0475F7] to-75% bg-clip-text text-transparent">Punjab, India</span> - A full-stack web developer who builds fast, responsive and modern web applications using Next.js and Tailwind CSS. I thrive on challenges, whether that's competing in hackathons, exploring Web3 with Rust and Solana, or creating practical digital tools.<br />
+                    <p>I&apos;m Gursimran Singh from <span className="bg-gradient-to-r from-[#FF7A01] via-75% to-[#0475F7] to-75% bg-clip-text text-transparent">Punjab, India</span> - A full-stack web developer who builds fast, responsive and modern web applications using Next.js and Tailwind CSS. I thrive on challenges, whether that&apos;s competing in hackathons, exploring Web3 with Rust and Solana, or creating practical digital tools.<br />
                     My journey has taught me that consistent effort and dedication bring real results, so I stay committed, trust the process, and let the work speak for itself.</p>
                 </div>
             </section>
