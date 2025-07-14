@@ -48,14 +48,14 @@ const FeatureItem = ({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <GlowingEffect
+            {/* <GlowingEffect
                 spread={25}
                 borderWidth={1}
                 glow={true}
                 disabled={false}
                 proximity={40}
                 inactiveZone={0.01}
-            />
+            /> */}
             <div className="relative flex justify-center mb-4 h-[300px] overflow-hidden rounded-[30px]">
                 {badge && (
                     <div className="absolute top-3 right-3 z-10 bg-black text-white text-sm font-product px-3 py-2 rounded-full">
