@@ -3,42 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { throttle } from "@/lib/utils";
 import { scrollToTop } from "@/lib/scroll";
 
-const Navbar = () => {
-    // Set initial state to false (not scrolled) to match the logic
-    const [scrolled, setScrolled] = useState(false);
-    
-    // Handle scroll event with throttle for better performance
-    useEffect(() => {
-        // Check initial scroll position
-        if (window.scrollY > 100) {
-            setScrolled(true);
-        }
-        
-        const handleScroll = throttle(() => {
-            const offset = window.scrollY;
-            if (offset > 100) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        }, 200);
+type props = { scrolled: boolean, vairent?: string };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);    return (
-        <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
-            <div 
-                onClick={() => scrollToTop({ duration: 1 })}
-                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}
-            >
-                <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
-                <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
-            </div>
-            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}></div>
-            <div className={`border-1 border-black/25 rounded-full flex items-center p-2 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}>
+const Links = ({ scrolled, vairent }: props) => {
+    return (
+        <div className={`border-1 border-black/25 rounded-full max-w-fit flex items-center p-2 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : (vairent === 'blue' ? 'bg-[#E5F0FD]' : 'bg-transparent')}`}>
                 <ol className="flex gap-2 justify-center items-center">
                     <Link href="https://github.com/gursimrxn" className="border-black/50 border-1 rounded-full p-2">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -70,7 +43,53 @@ const Navbar = () => {
                     </Link>
                 </ol>
             </div>
+    );
+}
+
+
+const Navbar = () => {
+    // Set initial state to false (not scrolled) to match the logic
+    const [scrolled, setScrolled] = useState(false);
+    const router = useRouter();
+    
+    // Handle scroll event with throttle for better performance
+    useEffect(() => {
+        // Check initial scroll position
+        if (window.scrollY > 100) {
+            setScrolled(true);
+        }
+        
+        const handleScroll = throttle(() => {
+            const offset = window.scrollY;
+            if (offset > 100) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        }, 200);
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);    return (
+        <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
+            <div
+                onClick={() => {
+                    if (window.location.pathname !== "/") {
+                        router.push("/");
+                    } else {
+                        scrollToTop({ duration: 1 });
+                    }
+                }}
+                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}
+            >
+                <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
+                <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
+            </div>
+            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}></div>
+            <Links scrolled/>
         </nav>
     );
 };
+
+export { Links };
 export default Navbar;
