@@ -15,7 +15,7 @@ import { TextMorph } from './ui/TextMorph';
 const getDateProps = () => {
   const today = new Date();
   const oneYearAgo = new Date();
-  oneYearAgo.setMonth(today.getMonth() - 11);
+  oneYearAgo.setMonth(today.getMonth() - 7);
   return { startDate: oneYearAgo, endDate: today };
 };
 
@@ -212,7 +212,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             scrollbar-color: #FFA116 transparent;
           }
         `}</style>
-        <div className="min-w-[960px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
+        <div className="min-w-[640px] bg-amber-50/20 rounded-[20px] pt-2 pr-6">
           <HeatMap
             {...getDateProps()}
             className="w-full mx-auto"
