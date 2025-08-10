@@ -41,7 +41,7 @@ const FeatureItem = ({
             className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t 
                 ${
                     hovered
-                        ? "from-[#FBEEE1] to-[#FBE5D5]"
+                        ? "from-[#ebfbe1] to-[#d5fbd6]"
                         : "from-[#ffffff] to-[#fcfcfc]"
                 } 
                 select-none p-3 flex flex-col transition-colors duration-300 ease-in-out`}
@@ -93,8 +93,8 @@ const defaultItems: FeatureItemProps[] = [
     {
         title: "Dhaniverse - Personal Finance RPG",
         description: "A Gamified financial management app designed as an Open World 2D RPG for Gen Z and Millenials.",
-        imageURL: "/logos/Dhaniverse.png",
-        link: "/projects/dhaniverse",
+        imageURL: "/logos/Dhaniverse.jpg",
+        link: "https://dhaniverse.in",
         badge: "1st Place at HackMol 6.0",
     },
     {
