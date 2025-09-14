@@ -56,7 +56,7 @@ interface RecentHighlightsProps {
 const RecentHighlights = ({ 
   title = 'RECENT HIGHLIGHTS',
   highlights = [
-    { title: 'President at Computer Society Of India', href: '#' },
+    { title: 'Founder of Dhaniverse', href: '#' },
     { title: '1st Place Hackmol 6.0', href: '#' },
     { title: 'Finalist at Hacktu 6.0', href: '#' }
   ]

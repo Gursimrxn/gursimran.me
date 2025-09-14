@@ -152,7 +152,7 @@ const BentoGithubActivity = ({ data }: Props) => {
         />
       
       <div className="flex items-center justify-between p-2">
-        <BentoBadge icon={Github} text="GITHUB ACTIVITY" />
+        <BentoBadge icon={Github} text="GITHUB ACTIVITY" href="https://github.com/gursimrxn" />
         <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
           {hoveredTile || ''}
         </TextMorph>

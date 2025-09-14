@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { RightArrow } from "@/components/icons";
 import { useState } from "react";
-import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import { Suitcase } from "./icons";
 
 interface FeatureItemProps {

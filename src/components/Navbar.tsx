@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import MenuPortal from "@/components/MenuPortal";
 
 type props = { scrolled: boolean, vairent?: string };

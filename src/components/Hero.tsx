@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { GlowingEffect } from "./ui/GlowingEffect";
 
 const Hero = () => {
     return (
@@ -36,8 +35,8 @@ const Hero = () => {
                 <span className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text">Singh.</span>
             </h1>
 
-            <p className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
-                <span className="">I'm a student developer with 3+ years of experience.</span> I enjoy breaking and building <span className="font-bold">full-stack apps, AI agents, and decentralized apps</span>, often during hackathons or late-night projects.
+                <p className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
+                <span className="">I&apos;m a student developer with 3+ years of experience.</span> I enjoy breaking and building <span className="font-bold">full-stack apps, AI agents, and decentralized apps</span>, often during hackathons or late-night projects.
             </p>
                 </div>
         </main>

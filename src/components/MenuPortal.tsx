@@ -25,8 +25,9 @@ const socialItems: MenuSocialItem[] = [
 ];
 
 const MenuPortal: React.FC<Props> = ({ open, onClose }) => {
+  const [isOpen, setisOpen] = React.useState(false);
   return (
-      <div className="fixed inset-0 z-[2000] w-full h-full">
+      <div className={`fixed inset-0 z-[2000] w-full h-full ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
         <Menu
           position="right"
           items={menuItems}
@@ -38,8 +39,8 @@ const MenuPortal: React.FC<Props> = ({ open, onClose }) => {
           changeMenuColorOnOpen={true}
           colors={["#0f172a", "#0b1220", "#061226"]}
           accentColor="#F98500"
-          onMenuOpen={() => {}}
-          onMenuClose={onClose}
+          onMenuOpen={() => {setisOpen(true);}}
+          onMenuClose={()=>{setisOpen(false); onClose();}}
         />
       <style>{`
         body { overflow: ${open ? 'hidden' : 'auto'}; }

@@ -1,6 +1,5 @@
 "use client";
 
-import { GlowingEffect } from "@/components/ui/GlowingEffect";
 import TypingSpeed from "./TypingSpeed";
 import RecentHighlights from "./RecentHighlights";
 import TechStack from "./TechStack";

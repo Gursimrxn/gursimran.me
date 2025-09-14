@@ -1,5 +1,7 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { scrollToTop } from "@/lib/scroll";
+import { useRouter } from "next/navigation";
 
 export interface MenuItem {
     label: string;
@@ -68,6 +70,8 @@ export const Menu: React.FC<MenuProps> = ({
     const busyRef = useRef(false);
 
     const itemEntranceTweenRef = useRef<gsap.core.Tween | null>(null);
+
+    const router = useRouter();
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -139,7 +143,10 @@ export const Menu: React.FC<MenuProps> = ({
 
         if (itemEls.length) gsap.set(itemEls, { yPercent: 140, rotate: 10 });
         if (numberEls.length)
-            gsap.set(numberEls, { ["--sm-num-opacity" as any]: 0 });
+            gsap.set(numberEls, { ["--sm-num-opacity"]: 0 } as Record<
+                string,
+                unknown
+            >);
         if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
         if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
 
@@ -190,7 +197,11 @@ export const Menu: React.FC<MenuProps> = ({
                     {
                         duration: 0.6,
                         ease: "power2.out",
-                        ["--sm-num-opacity" as any]: 1,
+                        // typed as a record to allow custom CSS var animation
+                        ...({ ["--sm-num-opacity"]: 1 } as Record<
+                            string,
+                            unknown
+                        >),
                         stagger: { each: 0.08, from: "start" },
                     },
                     itemsStart + 0.1
@@ -275,7 +286,10 @@ export const Menu: React.FC<MenuProps> = ({
                     )
                 ) as HTMLElement[];
                 if (numberEls.length)
-                    gsap.set(numberEls, { ["--sm-num-opacity" as any]: 0 });
+                    gsap.set(numberEls, { ["--sm-num-opacity"]: 0 } as Record<
+                        string,
+                        unknown
+                    >);
 
                 const socialTitle = panel.querySelector(
                     ".sm-socials-title"
@@ -419,7 +433,10 @@ export const Menu: React.FC<MenuProps> = ({
                 style={
                     accentColor
                         ? ({
-                              ["--sm-accent" as any]: accentColor,
+                              // use a typed record to set CSS variable
+                              ...({
+                                  ["--sm-accent"]: accentColor,
+                              } as React.CSSProperties),
                           } as React.CSSProperties)
                         : undefined
                 }
@@ -436,7 +453,7 @@ export const Menu: React.FC<MenuProps> = ({
                             colors && colors.length
                                 ? colors.slice(0, 4)
                                 : ["#1e1e22", "#35353c"];
-                        let arr = [...raw];
+                        const arr = [...raw];
                         if (arr.length >= 3) {
                             const mid = Math.floor(arr.length / 2);
                             arr.splice(mid, 1);
@@ -456,65 +473,73 @@ export const Menu: React.FC<MenuProps> = ({
                     aria-label="Main navigation header"
                 >
                     <div className="flex items-center justify-between w-full border-1 border-black/20 rounded-full backdrop-blur-sm bg-white/50 p-2">
-                    <div
-                        className="sm-logo flex items-center gap-3 select-none pointer-events-auto"
-                        aria-label="Logo"
-                    >
-                        <img
-                            src={logoUrl}
-                            alt="Logo"
-                            className="block h-8 w-auto rounded-full object-contain"
-                            draggable={false}
-                            width={110}
-                            height={24}
-                        />
-                        <span>Gursimran Singh</span>
-                    </div>
+                        <div
+                            className="sm-logo flex items-center gap-3 select-none pointer-events-auto cursor-pointer"
+                            aria-label="Logo"
+                            onClick={() => {
+                                if (window.location.pathname !== "/") {
+                                    router.push("/");
+                                } else {
+                                    scrollToTop({ duration: 1 });
+                                }
+                            }}
+                        >
+                            <img
+                                src={logoUrl}
+                                alt="Logo"
+                                className="block h-8 w-auto rounded-full object-contain"
+                                draggable={false}
+                                width={110}
+                                height={24}
+                            />
+                            <span>Gursimran Singh</span>
+                        </div>
 
-                    <button
-                        ref={toggleBtnRef}
-                        className="sm-toggle relative inline-flex items-center gap-[0.3rem] bg-transparent border-0 cursor-pointer text-[#e9e9ef] font-medium leading-none overflow-visible pointer-events-auto"
-                        aria-label={open ? "Close menu" : "Open menu"}
-                        aria-expanded={open}
-                        aria-controls="-menu-panel"
-                        onClick={toggleMenu}
-                        type="button"
-                    >
-                        <span
-                            ref={textWrapRef}
-                            className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)]"
-                            aria-hidden="true"
+                        <button
+                            ref={toggleBtnRef}
+                            className="sm-toggle relative inline-flex items-center gap-[0.3rem] bg-transparent border-0 cursor-pointer text-[#e9e9ef] font-medium leading-none overflow-visible pointer-events-auto"
+                            aria-label={open ? "Close menu" : "Open menu"}
+                            aria-expanded={open}
+                            aria-controls="-menu-panel"
+                            onClick={toggleMenu}
+                            type="button"
                         >
                             <span
-                                ref={textInnerRef}
-                                className="sm-toggle-textInner flex flex-col leading-none"
+                                ref={textWrapRef}
+                                className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)]"
+                                aria-hidden="true"
                             >
-                                {textLines.map((l, i) => (
-                                    <span
-                                        className="sm-toggle-line block h-[1em] leading-none"
-                                        key={i}
-                                    >
-                                        {l}
-                                    </span>
-                                ))}
+                                <span
+                                    ref={textInnerRef}
+                                    className="sm-toggle-textInner flex flex-col leading-none"
+                                >
+                                    {textLines.map((l, i) => (
+                                        <span
+                                            className="sm-toggle-line block h-[1em] leading-none"
+                                            key={i}
+                                        >
+                                            {l}
+                                        </span>
+                                    ))}
+                                </span>
                             </span>
-                        </span>
 
-                        <span
-                            ref={iconRef}
-                            className="sm-icon relative w-[14px] h-[14px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
-                            aria-hidden="true"
-                        >
                             <span
-                                ref={plusHRef}
-                                className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-                            />
-                            <span
-                                ref={plusVRef}
-                                className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-                            />
-                        </span>
-                    </button></div>
+                                ref={iconRef}
+                                className="sm-icon relative w-[14px] h-[14px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
+                                aria-hidden="true"
+                            >
+                                <span
+                                    ref={plusHRef}
+                                    className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                                />
+                                <span
+                                    ref={plusVRef}
+                                    className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                                />
+                            </span>
+                        </button>
+                    </div>
                 </header>
 
                 <aside

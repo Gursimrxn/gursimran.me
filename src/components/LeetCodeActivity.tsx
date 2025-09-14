@@ -162,7 +162,7 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
           inactiveZone={0.01}
         />
         <div className="flex items-center justify-between p-2">
-        <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" />
+        <BentoBadge icon={LeetCode} text="LEETCODE ACTIVITY" href="https://leetcode.com/gursimrxn" />
         <TextMorph className="line-clamp-1 text-sm font-product cursor-text">
           {hoveredTile || ''}
         </TextMorph>

@@ -6,15 +6,26 @@ interface BentoBadgeProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string;
   className?: string;
+  href?: string;
 }
 
-const BentoBadge: React.FC<BentoBadgeProps> = ({ icon: Icon, text, className }) => {
-  return (
+const BentoBadge: React.FC<BentoBadgeProps> = ({ icon: Icon, text, className, href }) => {
+  const content = (
     <div className={`flex items-center gap-2 ${className}`}>
       <Icon className="h-4 w-4 text-white" />
       <span className="font-product font-bold tracking-widest text-xs sm:text-sm md:text-base">{text}</span>
     </div>
   );
+
+  if (href) {
+    return (
+      <a href={href} className='cursor-pointer' target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 };
 
 export default BentoBadge;
