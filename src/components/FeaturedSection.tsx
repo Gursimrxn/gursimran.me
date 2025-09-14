@@ -109,14 +109,14 @@ const defaultItems: FeatureItemProps[] = [
 const FeaturedSection = ({ items = defaultItems }: FeaturedSectionProps) => {
     return (
         <div className="relative w-full rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#ffffff] to-[#fcfcfc] p-4">
-            <GlowingEffect
+            {/* <GlowingEffect
                 spread={25}
                 borderWidth={1}
                 glow={true}
                 disabled={false}
                 proximity={40}
                 inactiveZone={0.01}
-            />
+            /> */}
             <div className="flex justify-between items-center pb-6 p-2">
                 <BentoBadge icon={Suitcase} text="FEATURED PROJECTS" />
                 <Link

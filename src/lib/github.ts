@@ -1,4 +1,4 @@
-import request from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 import { GetGithubContributions } from '@/lib/graphql';
 import type { GithubContributionData } from '@/types';
@@ -33,23 +33,17 @@ const getGithubContributions = async (username: string): Promise<GithubContribut
   }
 
   try {
-    // Add cache-busting timestamp
-    const timestamp = Date.now();
-    
-    // Request with typed response
-    const response = await request<ContributionsResponse>({
-      url: 'https://api.github.com/graphql',
-      document: GetGithubContributions,
-      variables: { 
-        userName: username,
-        _cacheBust: timestamp // Add timestamp parameter for cache busting
-      },
-      requestHeaders: {
+    // Create a client with proper headers
+    const client = new GraphQLClient('https://api.github.com/graphql', {
+      headers: {
         Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
+      },
+    });
+
+    // Request with typed response
+    const response = await client.request<ContributionsResponse>(GetGithubContributions, {
+      userName: username,
     });
 
     // Extract calendar data

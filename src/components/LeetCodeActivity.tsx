@@ -227,7 +227,6 @@ const BentoLeetCodeActivity = ({ data }: Props) => {
             rectSize={16}
             rectRender={renderRect(handleTileHover)}
             panelColors={{
-              0: 'rgba(255, 251, 240, 0.2)', // Even more transparent for zero
               1: '#FFECD1', // Very light peach for 1 problem
               2: '#FFD599', // Light orange-peach for 2 problems
               3: '#FFBF66', // Medium peach for 3 problems

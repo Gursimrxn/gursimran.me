@@ -73,9 +73,9 @@ export default function RootLayout({
       <body className={`min-h-screen`}>
         <ThemeProvider>
           <CursorProvider>
-            <Navbar />
-            <main>{children}</main>
-            <ScrollToTopButton />
+              <Navbar />
+              <main className="mt-20">{children}</main>
+              <ScrollToTopButton />
           </CursorProvider>
           <Analytics />
         </ThemeProvider>

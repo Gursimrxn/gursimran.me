@@ -44,14 +44,14 @@ const GridItem = ({ area, children }: GridItemProps) => {
         bg-gradient-to-t from-[#FCFCFC] to-[#FFFEFA]
         transition-all duration-500
       ">
-        <GlowingEffect
+        {/* <GlowingEffect
           spread={25}
           borderWidth={1}
           glow={true}
           disabled={false}
           proximity={40}
           inactiveZone={0.01}
-        />
+        /> */}
         <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity hover:opacity-100 bg-gradient-to-t from-gray-100/30 to-transparent"></div>
         {children}
       </div>

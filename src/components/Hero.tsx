@@ -6,7 +6,7 @@ import { GlowingEffect } from "./ui/GlowingEffect";
 const Hero = () => {
     return (
         <main className="relative bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] my-2 max-w-7xl mx-auto flex flex-col items-center px-4 border-1 border-black/25 rounded-[40px] py-12">
-            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01}/>            
+            {/* <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01}/>             */}
             <div className="relative my-6">
                 <div className="bg-gradient-to-t from-[#F9850010] to-[#FEFDFD] border-1 border-black/10 rounded-full px-2 py-2 flex gap-3 items-center">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,8 +36,8 @@ const Hero = () => {
                 <span className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text">Singh.</span>
             </h1>
 
-            <p className="text-center mb-12 max-w-3xl m-auto text-gray-600 font-product cursor-text">
-                I am a developer who loves to create modern web experiences. I enjoy working with Next.js, Tailwind CSS, and other modern technologies to build beautiful and functional applications.
+            <p className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
+                <span className="">I'm a student developer with 3+ years of experience.</span> I enjoy breaking and building <span className="font-bold">full-stack apps, AI agents, and decentralized apps</span>, often during hackathons or late-night projects.
             </p>
                 </div>
         </main>

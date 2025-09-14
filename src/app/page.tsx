@@ -66,25 +66,28 @@ export default function LandingPage() {
     <main className="px-4">
       <Hero />
       <div className="my-4 max-w-7xl mx-auto grid grid-cols-1 gap-4">
+        <FeaturedSection />
+        <GlowingCardGrid />
+
+        <h1 className="text-2xl m-20 font-product font-bold text-center">Proof that I code</h1>
+
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
           <Suspense fallback={
             <div className="relative overflow-hidden z-0 h-[270px] rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] animate-pulse">
-              <GlowingEffect spread={40} glow={true} proximity={64} inactiveZone={0.01} />
+              {/* <GlowingEffect spread={40} glow={true} proximity={64} inactiveZone={0.01} /> */}
             </div>
           }>
             <GitHubActivitySection />
           </Suspense>
           <Suspense fallback={
             <div className="relative overflow-hidden z-0 h-[270px] rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] animate-pulse">
-              <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+              {/* <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} /> */}
             </div>
           }>
             <LeetCodeActivitySection />
           </Suspense>
         </div>
-        <GlowingCardGrid />
         
-        <FeaturedSection />
         
         <AboutMe />
       </div>

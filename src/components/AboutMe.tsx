@@ -2,8 +2,8 @@
 import Image from "next/image"
 import BentoBadge from "./ui/BentoBadge"
 import { Resume, User } from "@/components/icons"
-import { Links } from "@/components/Navbar"
 import Link from "next/link"
+import { Links } from "./Navbar"
 
 const AboutMe = () => {
     return (

@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { throttle } from "@/lib/utils";
-import { scrollToTop } from "@/lib/scroll";
+import { useCallback, useEffect, useState } from "react";
+import MenuPortal from "@/components/MenuPortal";
 
 type props = { scrolled: boolean, vairent?: string };
 
@@ -48,46 +45,10 @@ const Links = ({ scrolled, vairent }: props) => {
 
 
 const Navbar = () => {
-    // Set initial state to false (not scrolled) to match the logic
-    const [scrolled, setScrolled] = useState(false);
-    const router = useRouter();
-    
-    // Handle scroll event with throttle for better performance
-    useEffect(() => {
-        // Check initial scroll position
-        if (window.scrollY > 100) {
-            setScrolled(true);
-        }
-        
-        const handleScroll = throttle(() => {
-            const offset = window.scrollY;
-            if (offset > 100) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        }, 200);
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);    return (
-        <nav className={`sticky top-4 z-50 my-4 h-12 max-w-7xl mx-auto flex gap-3 justify-between transition-all duration-300`}>
-            <div
-                onClick={() => {
-                    if (window.location.pathname !== "/") {
-                        router.push("/");
-                    } else {
-                        scrollToTop({ duration: 1 });
-                    }
-                }}
-                className={`border-1 border-black/25 rounded-full flex px-8 gap-2 justify-center items-center tracking-wider w-fit cursor-pointer hover:bg-gray-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}
-            >
-                <Image src="/me.jpg" alt="" width={24} height={24} className="rounded-full aspect-square object-cover" />
-                <span className="text-nowrap">Gursimran&apos;s Portfolio</span>
-            </div>
-            <div className={`border-1 border-black/25 rounded-full w-full sm:block hidden transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : 'bg-transparent'}`}></div>
-            <Links scrolled/>
-        </nav>
+    const [open, setOpen] = useState(false);
+    const close = useCallback(() => setOpen(false), []);
+    return (
+        <MenuPortal open={open} onClose={close} />
     );
 };
 
