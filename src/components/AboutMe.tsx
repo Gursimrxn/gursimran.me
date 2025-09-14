@@ -18,7 +18,7 @@ const AboutMe = () => {
                         <div className="rounded-full w-full flex justify-between items-center">
                             <Links scrolled={false} vairent="blue" />
                             <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-[#0475F7] gap-3 px-4 py-2 rounded-full">
-                                <Resume /> <span className="text-lg font-light text-white font-product">Resume</span>
+                                <Resume /> <span className="sm:text-lg text-sm font-light text-white font-product">Resume</span>
                             </Link>
                         </div>
                     </div>
@@ -29,8 +29,8 @@ const AboutMe = () => {
                     >
                         “The harder you work, the luckier you get.”
                     </h2>
-                    <p>I&apos;m Gursimran Singh from <span className="bg-gradient-to-r from-[#FF7A01] via-75% to-[#0475F7] to-75% bg-clip-text text-transparent">Punjab, India</span> - A full-stack web developer who builds fast, responsive and modern web applications using Next.js and Tailwind CSS. I thrive on challenges, whether that&apos;s competing in hackathons, exploring Web3 with Rust and Solana, or creating practical digital tools.<br />
-                    My journey has taught me that consistent effort and dedication bring real results, so I stay committed, trust the process, and let the work speak for itself.</p>
+                    <p>I&apos;m Gursimran Singh, a developer based in <span className="font-bold">Punjab, India</span> who loves going low-level, exploring systems, memory, and how things work under the hood, while still building clean, modern products on top.</p>
+                    <span className="font-extralight text-xs italic">* I am still working on this section, idk what to write.</span>
                 </div>
             </section>
         </div>

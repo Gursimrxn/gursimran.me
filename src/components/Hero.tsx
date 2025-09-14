@@ -22,15 +22,21 @@ const Hero = () => {
                 </div>
             </div>
             <div>
-
-            <h1 className="text-5xl sm:text-6xl my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center">
+            <Image 
+                    src="/me.jpg" 
+                    alt="Gursimran Singh's Image" 
+                    width={82} 
+                    height={82} 
+                    className="rounded-[30px] mt-4 mx-auto aspect-square object-cover sm:hidden block"
+                    />
+            <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center">
                 <span className="bg-gradient-to-r py-4 from-[#000000] via-[#FF7A01] to-[#727889] text-transparent bg-clip-text">Gursimran</span>
                 <Image 
                     src="/me.jpg" 
                     alt="Gursimran Singh's Image" 
                     width={82} 
                     height={82} 
-                    className="rounded-[30px] mx-2 aspect-square object-cover"
+                    className="rounded-[30px] mx-2 aspect-square object-cover sm:block hidden"
                     />
                 <span className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text">Singh.</span>
             </h1>

@@ -8,7 +8,7 @@ type props = { scrolled: boolean, vairent?: string };
 
 const Links = ({ scrolled, vairent }: props) => {
     return (
-        <div className={`border-1 border-black/25 rounded-full max-w-fit flex items-center p-2 transition-all duration-300 ${scrolled ? 'backdrop-blur-md bg-white/75' : (vairent === 'blue' ? 'bg-[#E5F0FD]' : 'bg-transparent')}`}>
+        <div className={`border-1 border-black/25 rounded-full max-w-fit flex items-center transition-all duration-300 sm:transform sm:scale-100 scale-90 sm:p-2 p-1 ${scrolled ? 'backdrop-blur-md bg-white/75' : (vairent === 'blue' ? 'bg-[#E5F0FD]' : 'bg-transparent')}`}>
                 <ol className="flex gap-2 justify-center items-center">
                     <Link href="https://github.com/gursimrxn" className="border-black/50 border-1 rounded-full p-2">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" >
