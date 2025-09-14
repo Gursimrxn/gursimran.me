@@ -425,6 +425,16 @@ export const Menu: React.FC<MenuProps> = ({
 
     return (
         <div className="sm-scope w-full h-full">
+            {/* Backdrop shown when menu is open */}
+            <div
+                className={`sm-menu-backdrop fixed inset-0 backdrop-blur-xs transition-opacity duration-300 pointer-events-none ${
+                    open ? 'opacity-100 pointer-events-auto' : 'opacity-0'
+                }`}
+                aria-hidden={!open}
+                onClick={() => {
+                    if (open) toggleMenu();
+                }}
+            />
             <div
                 className={
                     (className ? className + " " : "") +
@@ -663,6 +673,8 @@ export const Menu: React.FC<MenuProps> = ({
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
 .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.1em; right: 3.2em; font-size: 18px; font-weight: 400; color: var(--sm-accent, #ff0000); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); }
+.sm-scope .sm-menu-backdrop { z-index: 9; }
+@media (max-width: 1024px) { .sm-scope .sm-menu-backdrop { z-index: 9; } .sm-scope .-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }
 @media (max-width: 1024px) { .sm-scope .-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }
 @media (max-width: 640px) { .sm-scope .-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }
       `}</style>
