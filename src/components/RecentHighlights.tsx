@@ -20,6 +20,8 @@ const HighlightCard = ({ item, index }: { item: HighlightItem; index: number }) 
   return (
     <Link 
       href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={cn(
         "group flex items-center justify-between rounded-[30px] border-1 border-black/10",
         "bg-[#0475F71A] hover:bg-[#0475f720]",

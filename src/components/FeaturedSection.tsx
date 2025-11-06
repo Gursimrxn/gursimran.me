@@ -37,6 +37,8 @@ const FeatureItem = ({
     
     return (        <Link
             href={link}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`relative h-full w-full rounded-[40px] border-1 border-black/10 bg-gradient-to-t 
                 ${
                     hovered
