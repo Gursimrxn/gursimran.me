@@ -29,7 +29,7 @@ const Hero = () => {
                     height={82} 
                     className="rounded-[30px] mt-4 mx-auto aspect-square object-cover sm:hidden block"
                     />
-            <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center">
+            <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center tracking-tighter">
                 <span className="bg-gradient-to-r py-4 from-[#000000] via-[#FF7A01] to-[#727889] text-transparent bg-clip-text">Gursimran</span>
                 <Image 
                     src="/gursimran.webp" 

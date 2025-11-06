@@ -96,6 +96,10 @@ export const Menu: React.FC<MenuProps> = ({
             const offscreen = position === "left" ? -100 : 100;
             gsap.set([panel, ...preLayers], { xPercent: offscreen });
 
+            // Make visible after positioning
+            panel.classList.add('sm-ready');
+            if (preContainer) preContainer.classList.add('sm-ready');
+
             gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
             gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
             gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
@@ -649,9 +653,11 @@ export const Menu: React.FC<MenuProps> = ({
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
 .sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
 .sm-scope .sm-line { display: none !important; }
-.sm-scope .-menu-panel { position: absolute; top: 0; right: 0; width: clamp(560px, 30vw, 420px); height: 100%; background: white; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; }
+.sm-scope .-menu-panel { position: absolute; top: 0; right: 0; width: clamp(560px, 30vw, 420px); height: 100%; background: white; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; visibility: hidden; }
+.sm-scope .-menu-panel.sm-ready { visibility: visible; }
 .sm-scope [data-position='left'] .-menu-panel { right: auto; left: 0; }
-.sm-scope .sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(561px, 32vw, 430px); overflow: hidden; pointer-events: none; z-index: 5; }
+.sm-scope .sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(561px, 32vw, 430px); overflow: hidden; pointer-events: none; z-index: 5; visibility: hidden; }
+.sm-scope .sm-prelayers.sm-ready { visibility: visible; }
 .sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
 .sm-scope .sm-prelayer { position: absolute; top: 0; right: 0; height: 100%; width: 100%; transform: translateX(0); }
 .sm-scope .sm-panel-inner { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
