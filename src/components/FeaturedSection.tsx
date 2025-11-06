@@ -94,7 +94,7 @@ const defaultItems: FeatureItemProps[] = [
         description: "A Gamified financial management app designed as an Open World 2D RPG for Gen Z and Millenials.",
         imageURL: "/logos/Dhaniverse.jpg",
         link: "https://dhaniverse.in",
-        badge: "1st Place at HackMol 6.0",
+        badge: "1st Place at HackMOL 6.0",
     },
     {
         title: "Navirate - Indoor Navigation",
