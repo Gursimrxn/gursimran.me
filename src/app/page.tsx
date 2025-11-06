@@ -69,7 +69,10 @@ export default function LandingPage() {
         <FeaturedSection />
         <GlowingCardGrid />
 
-        <h1 className="text-2xl m-20 font-product font-bold text-center">Proof that I code</h1>
+        <div className="my-12">
+          <h2 className="text-3xl font-product font-semibold mb-2">Development Activity</h2>
+          <p className="text-gray-600 text-sm font-product">Consistent contributions across platforms and problem-solving practice</p>
+        </div>
 
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
           <Suspense fallback={

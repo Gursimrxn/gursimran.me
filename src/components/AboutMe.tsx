@@ -23,14 +23,39 @@ const AboutMe = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col md:w-1/2 gap-4 md:gap-10 lg:gap-20 px-8 w-full">
+                <div className="flex flex-col md:w-1/2 gap-4 md:gap-6 lg:gap-8 px-8 w-full">
                     <h2
                         className="text-4xl pb-4 w-full font-light cursor-text bg-gradient-to-r from-black via-[#FF7A01] via-25% to-[#0475F7] to-75% bg-clip-text text-transparent"
                     >
-                        “The harder you work, the luckier you get.”
+                        "The harder you work, the luckier you get."
                     </h2>
                     <p>I&apos;m Gursimran Singh, a developer based in <span className="font-bold">Punjab, India</span> who loves going low-level, exploring systems, memory, and how things work under the hood, while still building clean, modern products on top.</p>
-                    <span className="font-extralight text-xs italic">* I am still working on this section, idk what to write.</span>
+                    
+                    {/* Fun Stats */}
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold cursor-text">Typing Speed</span>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-3xl font-semibold bg-gradient-to-r from-[#0767FB] to-[#000000] text-transparent bg-clip-text cursor-text">144</span>
+                                <span className="text-sm text-gray-600 cursor-text">WPM</span>
+                            </div>
+                            <a 
+                                href="https://monkeytype.com/profile/gursimrxn" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-xs text-blue-500 hover:underline"
+                            >
+                                View on Monkeytype →
+                            </a>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold cursor-text">Location</span>
+                            <span className="text-sm text-gray-800 cursor-text">Punjab, India</span>
+                            <span className="text-xs text-gray-500 cursor-text">Open to remote work</span>
+                        </div>
+                    </div>
+                    
+                    <span className="font-extralight text-xs italic text-gray-400 mt-auto">* I am still working on this section, idk what to write.</span>
                 </div>
             </section>
         </div>
