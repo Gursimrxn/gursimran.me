@@ -37,7 +37,7 @@ export const Menu: React.FC<MenuProps> = ({
     displaySocials = true,
     displayItemNumbering = true,
     className,
-    logoUrl = "/me.jpg",
+    logoUrl = "/gursimran.webp",
     menuButtonColor = "#fff",
     openMenuButtonColor = "#fff",
     changeMenuColorOnOpen = true,

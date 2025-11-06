@@ -23,7 +23,7 @@ const Hero = () => {
             </div>
             <div>
             <Image 
-                    src="/me.jpg" 
+                    src="/gursimran.webp" 
                     alt="Gursimran Singh's Image" 
                     width={82} 
                     height={82} 
@@ -32,7 +32,7 @@ const Hero = () => {
             <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center">
                 <span className="bg-gradient-to-r py-4 from-[#000000] via-[#FF7A01] to-[#727889] text-transparent bg-clip-text">Gursimran</span>
                 <Image 
-                    src="/me.jpg" 
+                    src="/gursimran.webp" 
                     alt="Gursimran Singh's Image" 
                     width={82} 
                     height={82} 
