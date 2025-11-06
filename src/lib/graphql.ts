@@ -13,6 +13,15 @@ export const GetGithubContributions = gql`
             }
           }
         }
+        commitContributionsByRepository(maxRepositories: 100) {
+          repository {
+            nameWithOwner
+            isPrivate
+          }
+          contributions(first: 100) {
+            totalCount
+          }
+        }
       }
       repositories(first: 1, orderBy: { field: PUSHED_AT, direction: DESC }) {
         nodes {

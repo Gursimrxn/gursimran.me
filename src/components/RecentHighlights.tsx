@@ -56,8 +56,8 @@ interface RecentHighlightsProps {
 const RecentHighlights = ({ 
   title = 'RECENT HIGHLIGHTS',
   highlights = [
-    { title: '$5k Bounty - WCHL Global Finale', href: 'https://dorahacks.io/hackathon/wchl-global-finale/winner' },
-    { title: '$2k Prize - 3rd at WCHL Europe', href: 'https://dorahacks.io/hackathon/wchl-regional-round/winner' },
+    { title: '$5k Bounty - WCHL Global Finale', href: 'https://dorahacks.io/hackathon/wchl25-global-finale/winner' },
+    { title: '$2k Prize - 3rd at WCHL Europe', href: 'https://dorahacks.io/hackathon/wchl25-regional-round/winner' },
     { title: '1st Place - HackMOL 6.0', href: 'https://dhaniverse.in' }
   ]
 }: RecentHighlightsProps) => {
