@@ -2,6 +2,7 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { scrollToTop } from "@/lib/scroll";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export interface MenuItem {
     label: string;
@@ -110,7 +111,8 @@ export const Menu: React.FC<MenuProps> = ({
                 gsap.set(toggleBtnRef.current, { color: menuButtonColor });
         });
         return () => ctx.revert();
-    }, [menuButtonColor, position]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuButtonColor]);
 
     const buildOpenTimeline = useCallback(() => {
         const panel = panelRef.current;
@@ -498,13 +500,13 @@ export const Menu: React.FC<MenuProps> = ({
                                 }
                             }}
                         >
-                            <img
+                            <Image
                                 src={logoUrl}
                                 alt="Logo"
                                 className="block h-8 w-auto rounded-full object-contain"
                                 draggable={false}
-                                width={110}
-                                height={24}
+                                width={32}
+                                height={32}
                             />
                             <span>Gursimran Singh</span>
                         </div>

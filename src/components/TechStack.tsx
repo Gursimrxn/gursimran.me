@@ -49,11 +49,11 @@ const TechStack = () => {
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
     // Brand colors - cycling through your portfolio colors
-    const brandColors = ['#FF7A01', '#0475F7', '#10B981', '#8B5CF6'];
+    // const brandColors = ['#FF7A01', '#0475F7', '#10B981', '#8B5CF6'];
     
-    const getIconColor = (index: number) => {
-        return brandColors[index % brandColors.length];
-    };
+    // const getIconColor = (index: number) => {
+    //     return brandColors[index % brandColors.length];
+    // };
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -101,7 +101,7 @@ const TechStack = () => {
         }
     };
 
-    const handleIconHover = (e: React.MouseEvent<HTMLDivElement>, techName: string, index: number) => {
+    const handleIconHover = (e: React.MouseEvent<HTMLDivElement>, techName: string) => {
         const target = e.currentTarget;
         const rect = target.getBoundingClientRect();
         
@@ -164,11 +164,11 @@ const TechStack = () => {
             
             {/* Icons Grid */}
             <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4 sm:gap-6 justify-items-center items-center flex-1">
-                {technologies.map((tech, index) => (
+                {technologies.map((tech) => (
                     <div
                         key={tech.name}
                         className="tech-icon relative opacity-0 cursor-pointer"
-                        onMouseEnter={(e) => handleIconHover(e, tech.name, index)}
+                        onMouseEnter={(e) => handleIconHover(e, tech.name)}
                         onMouseLeave={handleIconLeave}
                         style={{
                             perspective: "1000px"
