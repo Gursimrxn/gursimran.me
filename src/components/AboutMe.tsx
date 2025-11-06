@@ -94,19 +94,19 @@ const AboutMe = () => {
 
                 {/* Right side - Info */}
                 <div className="flex flex-col md:w-1/2 gap-6 px-4 w-full">
-                    <p className="text-lg leading-relaxed text-gray-700">
-                        I&apos;m <span className="font-bold text-black">Gursimran Singh</span>, a developer based in <span className="font-bold">Punjab, India</span> who loves going low-level, exploring systems, memory, and how things work under the hood, while still building clean, modern products on top.
+                    <p className="text-lg leading-relaxed text-gray-700 cursor-text">
+                        I&apos;m <span className="font-bold text-black cursor-pointer">Gursimran Singh</span>, a developer based in <span className="font-bold">Punjab, India</span> who loves going low-level, exploring systems, memory, and how things work under the hood, while still building clean, modern products on top.
                     </p>
 
                     {/* Minimal Stats */}
                     <div className="flex flex-col gap-3">
                         {/* Location */}
                         <div className="flex items-center gap-3">
-                            <div className="relative">
+                            <div className="relative cursor-pointer">
                                 <div className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping absolute"></div>
                                 <div className="w-2.5 h-2.5 bg-red-500 rounded-full relative"></div>
                             </div>
-                            <div className="flex items-baseline gap-2">
+                            <div className="flex items-baseline gap-2 cursor-pointer">
                                 <span className="text-sm font-medium text-gray-900">Punjab, India</span>
                                 <span className="text-xs text-gray-500">•</span>
                                 <span className="text-xs text-gray-500 font-mono">{time || "..."}</span>
@@ -115,13 +115,13 @@ const AboutMe = () => {
 
                         {/* Typing Speed */}
                         <div className="flex items-center gap-3">
-                            <span className="text-sm text-gray-600">Typing Speed:</span>
-                            <span className="text-sm font-semibold text-gray-900">144 WPM</span>
+                            <span className="text-sm text-gray-600 cursor-pointer">Typing Speed:</span>
+                            <span className="text-sm font-semibold text-gray-900 cursor-pointer">144 WPM</span>
                             <a 
                                 href="https://monkeytype.com/profile/gursimrxn" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="text-xs text-blue-500 hover:underline ml-auto"
+                                className="text-xs text-blue-500 hover:underline ml-auto cursor-pointer"
                             >
                                 View →
                             </a>
