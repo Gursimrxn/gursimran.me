@@ -69,11 +69,6 @@ export default function LandingPage() {
         <FeaturedSection />
         <GlowingCardGrid />
 
-        <div className="my-12">
-          <h2 className="text-3xl font-product font-semibold mb-2">Development Activity</h2>
-          <p className="text-gray-600 text-sm font-product">Consistent contributions across platforms and problem-solving practice</p>
-        </div>
-
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
           <Suspense fallback={
             <div className="relative overflow-hidden z-0 h-[270px] rounded-[40px] border-1 border-black/25 bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] animate-pulse">
