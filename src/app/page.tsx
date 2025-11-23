@@ -63,7 +63,7 @@ async function LeetCodeActivitySection() {
 
 export default function LandingPage() {
   return (
-    <main className="px-4">
+    <main className="px-4 pt-17">
       <Hero />
       <div className="my-4 max-w-7xl mx-auto grid grid-cols-1 gap-4">
         <FeaturedSection />
@@ -85,7 +85,6 @@ export default function LandingPage() {
             <LeetCodeActivitySection />
           </Suspense>
         </div>
-        
         
         <AboutMe />
       </div>
