@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import BentoBadge from "./ui/BentoBadge";
 import { Code } from "./icons";
@@ -47,6 +48,11 @@ const TechStack = () => {
     const [isInView, setIsInView] = useState(false);
     const [hoveredTech, setHoveredTech] = useState<string | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Brand colors - cycling through your portfolio colors
     // const brandColors = ['#FF7A01', '#0475F7', '#10B981', '#8B5CF6'];
@@ -190,8 +196,8 @@ const TechStack = () => {
                 ))}
             </div>
 
-            {/* Tooltip - Simple and instant */}
-            {hoveredTech && (
+            {/* Tooltip - Portal to body to escape overflow-hidden */}
+            {mounted && hoveredTech && createPortal(
                 <div
                     className="fixed pointer-events-none bg-black text-white text-xs font-semibold rounded-lg shadow-2xl px-3 py-2 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150"
                     style={{
@@ -205,7 +211,8 @@ const TechStack = () => {
                     <div 
                         className="absolute left-1/2 bottom-0 w-2 h-2 bg-black transform -translate-x-1/2 translate-y-1/2 rotate-45"
                     />
-                </div>
+                </div>,
+                document.body
             )}
 
             {/* Animated gradient orbs in background */}

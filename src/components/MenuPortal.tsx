@@ -10,8 +10,9 @@ type Props = {
 
 const menuItems: MenuItem[] = [
   { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+  { label: 'Projects', ariaLabel: 'View my projects', link: '/projects' },
   { label: 'About', ariaLabel: 'Learn about me', link: '/about' },
-  { label: 'Work', ariaLabel: 'View work', link: '/work' },
+  { label: 'Work', ariaLabel: 'View work experience', link: '/work' },
   { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
 ];
 
