@@ -5,8 +5,9 @@ import { Analytics } from '@vercel/analytics/next';
 import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar";
-import { ThemeProvider, CursorProvider } from "@/providers";
+import { ThemeProvider, CursorProvider, PageTransition } from "@/providers";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import LoaderAnimation from "@/components/LoaderAnimation";
 
 const urbane = localFont({
   src: [
@@ -70,15 +71,23 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`min-h-screen`}>
-        <ThemeProvider>
-          <CursorProvider>
+      <body className={`min-h-[100dvh]`}>
+        <style dangerouslySetInnerHTML={{ __html: `
+          #content-wrapper { opacity: 0; }
+        ` }} />
+        <LoaderAnimation />
+        <div id="content-wrapper">
+          <ThemeProvider>
+            <CursorProvider>
               <Navbar />
-              <main className="mt-20">{children}</main>
+              <PageTransition>
+                {children}
+              </PageTransition>
               <ScrollToTopButton />
-          </CursorProvider>
-          <Analytics />
-        </ThemeProvider>
+            </CursorProvider>
+            <Analytics />
+          </ThemeProvider>
+        </div>
       </body>
     </html>
     

@@ -1,12 +1,69 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 const Hero = () => {
+    const heroRef = useRef<HTMLDivElement>(null);
+    const badgeRef = useRef<HTMLDivElement>(null);
+    const mobileImageRef = useRef<HTMLDivElement>(null);
+    const desktopImageRef = useRef<HTMLDivElement>(null);
+    const nameFirstRef = useRef<HTMLSpanElement>(null);
+    const nameSecondRef = useRef<HTMLSpanElement>(null);
+    const descRef = useRef<HTMLParagraphElement>(null);
+    const orbsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({ delay: 1.2 });
+
+            // Cascade everything up smoothly
+            tl.fromTo([badgeRef.current, nameFirstRef.current, desktopImageRef.current, nameSecondRef.current, descRef.current, mobileImageRef.current],
+                { opacity: 0, y: 40 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 1, 
+                    stagger: 0.06,
+                    ease: 'expo.out' 
+                }
+            );
+
+            // Floating orbs
+            if (orbsRef.current) {
+                const orbs = orbsRef.current.querySelectorAll(".orb");
+                orbs.forEach((orb, i) => {
+                    gsap.to(orb, {
+                        y: "random(-40, 40)",
+                        x: "random(-30, 30)",
+                        duration: "random(5, 8)",
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 3 + i * 0.5
+                    });
+                });
+            }
+        }, heroRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <main className="relative bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] my-2 max-w-7xl mx-auto flex flex-col items-center px-4 border-1 border-black/25 rounded-[40px] py-12">
-            {/* <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01}/>             */}
-            <div className="relative my-6">
+        <section 
+            ref={heroRef}
+            className="relative bg-gradient-to-t from-[#FCFCFC] to-[#FFFCFA] my-2 max-w-7xl mx-auto flex flex-col items-center px-4 border-1 border-black/25 rounded-[40px] py-12 overflow-hidden"
+        >
+            {/* Animated Background Orbs */}
+            <div ref={orbsRef} className="absolute inset-0 pointer-events-none -z-10">
+                <div className="orb absolute w-72 h-72 rounded-full bg-gradient-to-r from-orange-300/30 to-transparent blur-3xl top-10 left-20" />
+                <div className="orb absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-400/30 to-transparent blur-3xl bottom-20 right-10" />
+                <div className="orb absolute w-56 h-56 rounded-full bg-gradient-to-r from-purple-300/20 to-transparent blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            </div>
+
+            {/* Badge */}
+            <div ref={badgeRef} className="relative my-6">
                 <div className="bg-gradient-to-t from-[#F9850010] to-[#FEFDFD] border-1 border-black/10 rounded-full px-2 py-2 flex gap-3 items-center">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="16" height="16" rx="8" fill="url(#paint0_linear_97_176)"/>
@@ -21,31 +78,48 @@ const Hero = () => {
                     <p className="text-sm font-product cursor-pointer">Hey, I am Developer focused on not screwing up!</p>
                 </div>
             </div>
+            
+            {/* Images */}
             <div>
-            <Image 
-                    src="/gursimran.webp" 
-                    alt="Gursimran Singh's Image" 
-                    width={82} 
-                    height={82} 
-                    className="rounded-[30px] mt-4 mx-auto aspect-square object-cover sm:hidden block"
+                <div ref={mobileImageRef}>
+                    <Image 
+                        src="/gursimran.webp" 
+                        alt="Gursimran Singh's Image" 
+                        width={82} 
+                        height={82} 
+                        className="rounded-[30px] mt-4 mx-auto aspect-square object-cover sm:hidden block"
                     />
-            <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center tracking-tighter">
-                <span className="bg-gradient-to-r py-4 from-[#000000] via-[#FF7A01] to-[#727889] text-transparent bg-clip-text">Gursimran</span>
-                <Image 
-                    src="/gursimran.webp" 
-                    alt="Gursimran Singh's Image" 
-                    width={82} 
-                    height={82} 
-                    className="rounded-[30px] mx-2 aspect-square object-cover sm:block hidden"
-                    />
-                <span className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text">Singh.</span>
-            </h1>
-
-                <p className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
-                <span className="">I&apos;m a student developer with 3+ years of experience.</span> I enjoy breaking and building <span className="font-bold">full-stack apps, AI agents, and decentralized apps</span>, often during hackathons or late-night projects.
-            </p>
                 </div>
-        </main>
+
+                <h1 className="text-4xl sm:text-6xl my-2 sm:my-6 md:text-7xl font-medium text-center flex gap-2 flex-wrap justify-center items-center tracking-tighter">
+                    <span 
+                        ref={nameFirstRef}
+                        className="bg-gradient-to-r py-4 from-[#000000] via-[#FF7A01] to-[#727889] text-transparent bg-clip-text"
+                    >
+                        Gursimran
+                    </span>
+                    <div ref={desktopImageRef}>
+                        <Image 
+                            src="/gursimran.webp" 
+                            alt="Gursimran Singh's Image" 
+                            width={82} 
+                            height={82} 
+                            className="rounded-[30px] mx-2 aspect-square object-cover sm:block hidden"
+                        />
+                    </div>
+                    <span 
+                        ref={nameSecondRef}
+                        className="bg-gradient-to-r py-4 from-[#0767FB] to-[#000000] text-transparent bg-clip-text"
+                    >
+                        Singh.
+                    </span>
+                </h1>
+
+                <p ref={descRef} className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
+                    I'm a student developer with 3+ years of experience. I enjoy breaking and building full-stack apps, AI agents, and decentralized apps, often during hackathons or late-night projects.
+                </p>
+            </div>
+        </section>
     );
 };
 
