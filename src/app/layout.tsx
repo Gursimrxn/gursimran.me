@@ -70,6 +70,9 @@ export default function RootLayout({
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Building modern web experiences with Next.js, Tailwind, and passion." />
       </head>
       <body className={`min-h-[100dvh]`}>
         <style dangerouslySetInnerHTML={{ __html: `
