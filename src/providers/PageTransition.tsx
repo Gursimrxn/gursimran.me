@@ -24,6 +24,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
   useEffect(() => {
     if (prevPathname.current === pathname) return;
     prevPathname.current = pathname;
+    document.body.style.overflow = 'hidden';
     
     // Scroll to top immediately
     lenisManager.scrollTo(0, { duration: 0.1, immediate: true });
@@ -31,7 +32,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
     const tl = gsap.timeline({
       onComplete: () => {
         setIsAnimating(false);
-        // Reset SVG to bottom for next time
+        document.body.style.overflow = '';
         if (svgRef.current) {
             const height = window.innerHeight;
             const width = window.innerWidth;
@@ -40,11 +41,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
       }
     });
 
-    // 1. Ensure screen is covered (if navigation happened without click, e.g. back button)
+    // 1. Ensure screen is covered
     if (!isAnimating && svgRef.current) {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      // Fill screen instantly
       tl.set(svgRef.current, { 
         attr: { d: `M0,0 Q${width/2},0 ${width},0 V${height} H0` } 
       });
@@ -69,11 +69,11 @@ export default function PageTransition({ children }: PageTransitionProps) {
         scale: 1,
         duration: 0.8,
         ease: "power3.out",
-        clearProps: "all" // Ensure no inline styles (like opacity/transform) persist
+        clearProps: "all"
       }, 
       "-=0.6"
     )
-    .set(svgRef.current, { yPercent: 0 }); // Reset transform
+    .set(svgRef.current, { yPercent: 0 });
 
   }, [pathname, children]);
   
@@ -93,7 +93,13 @@ export default function PageTransition({ children }: PageTransitionProps) {
       }
       
       const href = link.getAttribute('href');
-      if (!href || href === pathname || href.startsWith('#')) return;
+      if (!href || href.startsWith('#')) return;
+      
+      // If navigating to same route, just prevent default and return (menu will close via its own handler)
+      if (href === pathname) {
+        e.preventDefault();
+        return;
+      }
       
       // Prevent default navigation to allow animation to play first
       e.preventDefault();
@@ -109,7 +115,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
       
       const tl = gsap.timeline({
         onComplete: () => {
-            // Navigate after animation covers screen
+            // Always navigate, even if same route
             router.push(href);
         }
       });
@@ -147,21 +153,33 @@ export default function PageTransition({ children }: PageTransitionProps) {
 
   return (
     <>
-      {/* SVG Overlay */}
+      {/* SVG Overlay with Gradient Mesh */}
       <svg 
         className="fixed inset-0 z-[9999] pointer-events-none w-full h-full"
         style={{ filter: 'drop-shadow(0px -10px 20px rgba(0,0,0,0.05))' }}
       >
+        <defs>
+          <linearGradient id="transitionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="50%" stopColor="#f8f8f8" />
+            <stop offset="100%" stopColor="#f0f0f0" />
+          </linearGradient>
+          <filter id="transitionBlur">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" result="noise" seed="2" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
+          </filter>
+        </defs>
         <path 
           ref={svgRef} 
-          className="fill-[#f8f8f8]" 
+          className="fill-[url(#transitionGradient)]"
+          style={{ filter: 'url(#transitionBlur)' }}
           // Start hidden at bottom
           d="M0,10000 Q0,10000 0,10000 V10000 H0" 
         />
       </svg>
 
       {/* Page Content */}
-      <div ref={contentRef} className="min-h-[100dvh]">
+      <div ref={contentRef} className="min-h-[100dvh] overflow-hidden">
         {displayChildren}
       </div>
     </>
