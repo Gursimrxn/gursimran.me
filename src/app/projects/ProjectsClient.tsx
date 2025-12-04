@@ -42,7 +42,7 @@ export default function ProjectsClient() {
   }, []);
 
   return (
-    <main className="px-4 pt-17 pb-8" ref={containerRef}>
+    <main className="px-4 pt-24 pb-8" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
         
         {/* Page Header */}

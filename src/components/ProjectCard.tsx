@@ -27,8 +27,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
-      className="group relative cursor-pointer"
+    <Link
+      href={`/projects/${project.id}`}
+      className="group relative cursor-pointer block"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -140,6 +141,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       {project.featured && (
         <div className="absolute -left-px top-8 bottom-8 w-[3px] rounded-full bg-gradient-to-b from-emerald-500 via-emerald-400 to-emerald-500" />
       )}
-    </div>
+    </Link>
   );
 }

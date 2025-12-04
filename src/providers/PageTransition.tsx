@@ -14,16 +14,57 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  const [loadingText, setLoadingText] = useState('loading page...');
   
   const prevPathname = useRef(pathname);
   const svgRef = useRef<SVGPathElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const clickPosition = useRef({ x: 0 });
+  const loaderTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const textIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Loading text animation
+  useEffect(() => {
+    if (showLoader) {
+      const messages = [
+        'loading page...',
+        'fetching data...',
+        'rendering components...',
+        'almost there...'
+      ];
+      let index = 0;
+      textIntervalRef.current = setInterval(() => {
+        index = (index + 1) % messages.length;
+        setLoadingText(messages[index]);
+      }, 400);
+    } else {
+      if (textIntervalRef.current) {
+        clearInterval(textIntervalRef.current);
+        textIntervalRef.current = null;
+      }
+      setLoadingText('loading page...');
+    }
+    
+    return () => {
+      if (textIntervalRef.current) {
+        clearInterval(textIntervalRef.current);
+      }
+    };
+  }, [showLoader]);
 
   // Handle Route Change (Exit Animation / Reveal New Page)
   useEffect(() => {
     if (prevPathname.current === pathname) return;
     prevPathname.current = pathname;
+    
+    // Clear loader timeout and hide loader
+    if (loaderTimeoutRef.current) {
+      clearTimeout(loaderTimeoutRef.current);
+      loaderTimeoutRef.current = null;
+    }
+    setShowLoader(false);
+    
     document.body.style.overflow = 'hidden';
     
     // Scroll to top immediately
@@ -115,6 +156,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
       
       const tl = gsap.timeline({
         onComplete: () => {
+            // Start loader timeout - show loader if page doesn't load within 300ms
+            loaderTimeoutRef.current = setTimeout(() => {
+              setShowLoader(true);
+            }, 300);
             // Always navigate, even if same route
             router.push(href);
         }
@@ -177,6 +222,49 @@ export default function PageTransition({ children }: PageTransitionProps) {
           d="M0,10000 Q0,10000 0,10000 V10000 H0" 
         />
       </svg>
+
+      {/* Loader - shown if page takes too long to load */}
+      {showLoader && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center pointer-events-none">
+          <div className="flex flex-col items-center gap-6">
+            <div 
+              className="text-sm tracking-wide font-mono"
+              style={{
+                background: 'linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.4) 100%)',
+                backgroundSize: '200% 100%',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'shimmer 2s infinite linear'
+              }}
+            >
+              {loadingText}
+              <span className="animate-pulse">_</span>
+            </div>
+            
+            {/* Liquid morphing loader bar */}
+            <div className="relative w-48 h-1 bg-black/10 rounded-full overflow-hidden">
+              <div 
+                className="absolute inset-0 bg-black rounded-full"
+                style={{
+                  animation: 'liquidFlow 1.5s ease-in-out infinite'
+                }}
+              />
+            </div>
+          </div>
+          <style>{`
+            @keyframes shimmer {
+              0% { background-position: -200% 0; }
+              100% { background-position: 200% 0; }
+            }
+            @keyframes liquidFlow {
+              0% { transform: translateX(-100%); }
+              50% { transform: translateX(0%); }
+              100% { transform: translateX(100%); }
+            }
+          `}</style>
+        </div>
+      )}
 
       {/* Page Content */}
       <div ref={contentRef} className="min-h-[100dvh] overflow-hidden">
