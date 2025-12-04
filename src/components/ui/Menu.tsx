@@ -582,6 +582,12 @@ export const Menu: React.FC<MenuProps> = ({
                                             href={it.link}
                                             aria-label={it.ariaLabel}
                                             data-index={idx + 1}
+                                            onClick={() => {
+                                                // Close menu when clicking internal navigation links
+                                                if (!it.link.startsWith('http') && !it.link.startsWith('mailto:')) {
+                                                    toggleMenu();
+                                                }
+                                            }}
                                         >
                                             <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
                                                 {it.label}
