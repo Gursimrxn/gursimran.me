@@ -31,3 +31,45 @@ export const GetGithubContributions = gql`
     }
   }
 `;
+
+export const GetGithubCodeStats = gql`
+  query GetGithubCodeStats($login: String!) {
+    user(login: $login) {
+      repositories(first: 100, ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR], isFork: false, orderBy: { field: UPDATED_AT, direction: DESC }) {
+        totalCount
+        nodes {
+          name
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+            totalSize
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+        }
+      }
+      repositoriesContributedTo(first: 100, contributionTypes: [COMMIT, PULL_REQUEST], orderBy: { field: UPDATED_AT, direction: DESC }) {
+        totalCount
+        nodes {
+          name
+          owner {
+            login
+          }
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+            totalSize
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

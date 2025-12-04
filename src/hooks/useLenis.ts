@@ -53,11 +53,12 @@ export function useLenis(options: {
     lenisManager.setLenisInstance(lenis);
 
     // Animation frame update function with high priority
+    let animationFrameId: number;
     function raf(time: number) {
       if (lenisRef.current) {
         lenisRef.current.raf(time);
       }
-      requestAnimationFrame(raf);
+      animationFrameId = requestAnimationFrame(raf);
     }
 
     // Start the animation loop immediately
@@ -65,11 +66,14 @@ export function useLenis(options: {
 
     // Clean up on unmount
     return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
       lenis.destroy();
       lenisManager.setLenisInstance(null);
       lenisRef.current = null;
     };
-  }, [enabled, lenisOptions]);
+  }, [enabled]);
 
   return lenisRef;
 }
