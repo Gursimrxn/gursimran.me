@@ -1,3 +1,19 @@
+export interface ContentBlock {
+  type: 'text' | 'heading' | 'bullet' | 'image' | 'link' | 'code' | 'quote' | 'diagram' | 'gallery';
+  content?: string;
+  items?: string[];
+  url?: string;
+  title?: string;
+  alt?: string;
+  images?: Array<{ src: string; alt: string; caption?: string }>;
+  language?: string;
+}
+
+export interface Section {
+  title: string;
+  content: ContentBlock[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -16,6 +32,15 @@ export interface Project {
     label: string;
     value: string;
   };
+  details?: {
+    timeline?: string;
+    teamSize?: string;
+    challenge?: string;
+    solution?: string;
+    results?: string[];
+    highlights?: string[];
+  };
+  sections?: Section[];
 }
 
 export const projects: Project[] = [
@@ -36,7 +61,115 @@ export const projects: Project[] = [
     metrics: {
       label: 'Award',
       value: 'WCHL\'25 Winner'
-    }
+    },
+    details: {
+      timeline: '6 months',
+      teamSize: '3 core members',
+      challenge: 'Gen Z shows low financial literacy with 67% lacking basic money management skills. Traditional finance apps feel boring and outdated.',
+      solution: 'Created an immersive, gamified financial learning platform with blockchain rewards, making personal finance education engaging and incentivized.',
+      highlights: [
+        'Web3 identity verification for secure user management',
+        'Blockchain-based reward system for learning milestones',
+        'Interactive open-world environment with financial quests',
+        'Real-time portfolio tracking with predictive analytics'
+      ],
+      results: [
+        '5000+ active users in beta phase',
+        'Selected as WCHL\'25 finalist and winner',
+        '95% user retention rate',
+        'Featured in fintech innovation showcase'
+      ]
+    },
+    sections: [
+      {
+        title: 'Tech Architecture',
+        content: [
+          {
+            type: 'text',
+            content: 'Dhaniverse uses a modern, scalable architecture combining blockchain technology with mobile-first development practices.'
+          },
+          {
+            type: 'bullet',
+            items: [
+              'Frontend: React Native with TypeScript for cross-platform mobile development',
+              'Backend: Node.js with Express and GraphQL API',
+              'Blockchain: Solana and Ethereum smart contracts for tokenomics',
+              'Database: MongoDB with Redis caching layer',
+              'Authentication: Web3 wallet integration (MetaMask, Phantom)'
+            ]
+          },
+          {
+            type: 'diagram',
+            content: `
+Mobile App         API Server         Blockchain
+┌────────────┐     ┌────────────┐    ┌────────────┐
+│React Native│────▶│Node.js +   │───▶│Smart       │
+│TypeScript  │     │GraphQL     │    │Contracts   │
+└────────────┘     └────────────┘    └────────────┘
+     │                   │                  │
+     └───────────────────┴──────────────────┘
+              MongoDB + Redis`
+          }
+        ]
+      },
+      {
+        title: 'Key Features',
+        content: [
+          {
+            type: 'heading',
+            content: 'Gamification System'
+          },
+          {
+            type: 'text',
+            content: 'Users complete financial quests to earn XP and tokens, learning real-world money management skills through interactive challenges.'
+          },
+          {
+            type: 'bullet',
+            items: [
+              'Progressive difficulty levels from Novice to Expert',
+              'Daily quests for consistent engagement',
+              'Achievement badges and leaderboards',
+              'Social features for community learning'
+            ]
+          },
+          {
+            type: 'heading',
+            content: 'Blockchain Rewards'
+          },
+          {
+            type: 'text',
+            content: 'All achievements and rewards are stored on-chain, creating a verifiable, transferable learning record.'
+          },
+          {
+            type: 'quote',
+            content: 'By leveraging blockchain, we ensure users truly own their achievements and can build verifiable financial credentials.'
+          }
+        ]
+      },
+      {
+        title: 'Learning Resources',
+        content: [
+          {
+            type: 'link',
+            title: 'Whitepaper',
+            content: 'Complete technical documentation and vision',
+            url: 'https://dhaniverse.in/whitepaper'
+          },
+          {
+            type: 'link',
+            title: 'Blog: Finance for Gen Z',
+            content: 'Articles on investing, budgeting, and wealth building',
+            url: 'https://dhaniverse.in/blog'
+          },
+          {
+            type: 'link',
+            title: 'Documentation',
+            content: 'Developer guides and API reference',
+            url: 'https://docs.dhaniverse.in'
+          }
+        ]
+      }
+    ]
   },
   {
     id: 'navirate',
@@ -50,7 +183,72 @@ export const projects: Project[] = [
     featured: true,
     year: '2024',
     role: 'Full-Stack Developer',
-    status: 'in-progress'
+    status: 'in-progress',
+    sections: [
+      {
+        title: 'How It Works',
+        content: [
+          {
+            type: 'heading',
+            content: 'Indoor Positioning System'
+          },
+          {
+            type: 'text',
+            content: 'Navirate combines multiple positioning technologies to achieve meter-level accuracy indoors where GPS fails.'
+          },
+          {
+            type: 'bullet',
+            items: [
+              'WiFi RSSI triangulation for initial positioning',
+              'BLE beacon networks for precise location refinement',
+              'IMU sensors for movement tracking between updates',
+              'Machine learning algorithm for sensor fusion and accuracy'
+            ]
+          },
+          {
+            type: 'heading',
+            content: 'Real-time Navigation'
+          },
+          {
+            type: 'text',
+            content: 'Users receive turn-by-turn directions with dynamic route optimization based on obstacles and real-time footfall data.'
+          },
+          {
+            type: 'diagram',
+            content: `
+Sensor Input          Processing            Output
+┌──────────────┐     ┌──────────────┐      ┌──────────────┐
+│ WiFi RSSI    │     │ Sensor Fusion│      │ Route        │
+│ BLE Beacons  │────▶│ ML Algorithm │─────▶│ Optimization │
+│ IMU Data     │     │ Real-time    │      │ UI Rendering │
+└──────────────┘     └──────────────┘      └──────────────┘
+                            │
+                      ┌─────▼─────┐
+                      │ Database   │
+                      │ (Maps/     │
+                      │  WiFi Map) │
+                      └───────────┘`
+          }
+        ]
+      },
+      {
+        title: 'Resources',
+        content: [
+          {
+            type: 'link',
+            title: 'GitHub Repository',
+            content: 'Complete source code and contribution guidelines',
+            url: 'https://github.com/gursimrxn/Navirate'
+          },
+          {
+            type: 'link',
+            title: 'Research Paper',
+            content: 'Detailed algorithm and performance benchmarks',
+            url: 'https://navirate.dev/research'
+          }
+        ]
+      }
+    ]
   },
   {
     id: 'agamify',
