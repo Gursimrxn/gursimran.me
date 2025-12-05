@@ -18,16 +18,6 @@ const formatNumber = (num: number): string => {
   return num.toLocaleString('en-US');
 };
 
-const formatBytes = (bytes: number): string => {
-  if (bytes >= 1000000000) {
-    return (bytes / 1000000000).toFixed(1) + ' GB';
-  }
-  if (bytes >= 1000000) {
-    return (bytes / 1000000).toFixed(1) + ' MB';
-  }
-  return (bytes / 1000).toFixed(0) + ' KB';
-};
-
 const CodeStats = ({ stats }: Props) => {
   return (
     <div className="relative w-full rounded-[32px] border border-black/[0.08] bg-gradient-to-br from-white via-white to-black/[0.01] p-6 md:p-8 select-none">

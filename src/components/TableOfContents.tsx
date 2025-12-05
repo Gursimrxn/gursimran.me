@@ -14,7 +14,7 @@ export default function TableOfContents({ sections }: TableOfContentsProps) {
     const handleScroll = () => {
       const headings = sections.map(id => document.getElementById(id)).filter(Boolean);
       
-      for (let heading of headings) {
+      for (const heading of headings) {
         if (heading) {
           const rect = heading.getBoundingClientRect();
           if (rect.top <= 100) {

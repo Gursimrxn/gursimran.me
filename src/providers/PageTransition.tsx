@@ -116,7 +116,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
     )
     .set(svgRef.current, { yPercent: 0 });
 
-  }, [pathname, children]);
+  }, [pathname, children, isAnimating]);
   
   // Intercept Link Clicks (Enter Animation / Cover Screen)
   useEffect(() => {
@@ -194,7 +194,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
     
     document.addEventListener('click', handleLinkClick, true);
     return () => document.removeEventListener('click', handleLinkClick, true);
-  }, [pathname, isAnimating, router]);
+  }, [pathname, isAnimating, router, setIsAnimating]);
 
   return (
     <>

@@ -4,9 +4,16 @@ import { createContext, useContext, useState, ReactNode, useRef, useEffect } fro
 import { motion, useMotionValue, useSpring, AnimatePresence } from "motion/react";
 import { RightArrow } from "@/components/icons";
 
+interface CursorPosition {
+  x: number;
+  y: number;
+}
+
 interface CursorContextType {
   setShowViewMore: (show: boolean) => void;
   showViewMore: boolean;
+  cursorPosition: CursorPosition;
+  setCursorPosition: (pos: CursorPosition) => void;
 }
 
 const CursorContext = createContext<CursorContextType | undefined>(undefined);
@@ -20,16 +27,15 @@ export const useCursor = () => {
 };
 
 // View More cursor component
-const ViewMoreCursor = () => {
+const ViewMoreCursor = ({ currentPosition }: { currentPosition: CursorPosition }) => {
   const rotation = useMotionValue(0);
   const smoothRotation = useSpring(rotation, { stiffness: 400, damping: 15 });
-  const lastMousePos = useRef({ x: 0, y: 0 });
+  const lastMousePos = useRef(currentPosition);
   const velocity = useRef({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
-  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const updateRotation = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       const currentTime = Date.now();
       const deltaTime = currentTime - lastUpdateTime.current;
       
@@ -49,16 +55,13 @@ const ViewMoreCursor = () => {
         
         lastMousePos.current = currentPos;
         lastUpdateTime.current = currentTime;
-        
-        // Update position
-        setPosition({ x: currentPos.x, y: currentPos.y });
       }
     };
 
-    document.addEventListener('mousemove', updateRotation);
+    document.body.addEventListener('pointermove', handlePointerMove, { passive: true });
     
     return () => {
-      document.removeEventListener('mousemove', updateRotation);
+      document.body.removeEventListener('pointermove', handlePointerMove);
     };
   }, [rotation]);
 
@@ -66,8 +69,8 @@ const ViewMoreCursor = () => {
     <motion.div
       className="fixed top-0 left-0 pointer-events-none z-[9999] flex items-center justify-center"
       style={{
-        x: position.x - 60, // Offset to center the cursor
-        y: position.y - 20,
+        x: currentPosition.x - 60, // Offset to center the cursor
+        y: currentPosition.y - 20,
       }}
     >
       <motion.div
@@ -127,32 +130,37 @@ interface CursorProviderProps {
 
 export const CursorProvider = ({ children }: CursorProviderProps) => {
   const [showViewMore, setShowViewMore] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<CursorPosition>({ x: 0, y: 0 });
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastMousePosRef = useRef<CursorPosition>({ x: 0, y: 0 });
+
+  // Global mouse position tracking - always updated
+  useEffect(() => {
+    const handleGlobalPointerMove = (e: PointerEvent) => {
+      const pos = { x: e.clientX, y: e.clientY };
+      setCursorPosition(pos);
+      lastMousePosRef.current = pos;
+    };
+
+    document.body.addEventListener('pointermove', handleGlobalPointerMove, { passive: true });
+    
+    return () => {
+      document.body.removeEventListener('pointermove', handleGlobalPointerMove);
+    };
+  }, []);
 
   // Detect when mouse is over viewMore elements
   useEffect(() => {
-    const updateCursorState = (target: HTMLElement, event?: MouseEvent) => {
-      const shouldShowViewMore = target.classList.contains('cursor-view-more') || target.closest('.cursor-view-more');
+    const checkCursorOverViewMore = (clientX: number, clientY: number) => {
+      const elementAtPoint = document.elementFromPoint(clientX, clientY);
+      if (!elementAtPoint) return false;
       
-      // Also check if we're over a scrollbar within a view-more element
-      if (!shouldShowViewMore && event) {
-        const viewMoreParent = target.closest('.cursor-view-more');
-        if (viewMoreParent) {
-          const rect = target.getBoundingClientRect();
-          const x = event.clientX - rect.left;
-          const y = event.clientY - rect.top;
-          
-          // Check if we're in the scrollbar area (approximate)
-          const isNearRightEdge = x > rect.width - 20;
-          const isNearBottomEdge = y > rect.height - 20;
-          
-          if (isNearRightEdge || isNearBottomEdge) {
-            // We're likely over a scrollbar in a view-more element
-            setShowViewMore(true);
-            return;
-          }
-        }
-      }
+      return !!(elementAtPoint.classList.contains('cursor-view-more') || 
+                elementAtPoint.closest('.cursor-view-more'));
+    };
+
+    const updateCursorState = (clientX: number, clientY: number) => {
+      const shouldShowViewMore = checkCursorOverViewMore(clientX, clientY);
       
       // Clear any existing debounce
       if (debounceTimeoutRef.current) {
@@ -161,26 +169,31 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
       
       // Small debounce to prevent rapid flickering
       debounceTimeoutRef.current = setTimeout(() => {
-        setShowViewMore(!!shouldShowViewMore);
+        setShowViewMore(shouldShowViewMore);
       }, 10);
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      updateCursorState(target, e);
+    const handlePointerMove = (e: PointerEvent) => {
+      updateCursorState(e.clientX, e.clientY);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      updateCursorState(target, e);
+    // Check cursor state during scroll since elements move under the cursor
+    const handleScroll = () => {
+      // Use requestAnimationFrame to check after scroll has been processed
+      requestAnimationFrame(() => {
+        const { x, y } = lastMousePosRef.current;
+        if (x > 0 || y > 0) { // Only check if we have a valid mouse position
+          updateCursorState(x, y);
+        }
+      });
     };
 
-    document.addEventListener('mouseover', handleMouseOver, true);
-    document.addEventListener('mousemove', handleMouseMove, true);
+    document.body.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
-      document.removeEventListener('mouseover', handleMouseOver, true);
-      document.removeEventListener('mousemove', handleMouseMove, true);
+      document.body.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('scroll', handleScroll);
       
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
@@ -285,10 +298,10 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
   }, [showViewMore]);
 
   return (
-    <CursorContext.Provider value={{ setShowViewMore, showViewMore }}>
+    <CursorContext.Provider value={{ setShowViewMore, showViewMore, cursorPosition, setCursorPosition }}>
       {children}
       <AnimatePresence>
-        {showViewMore && <ViewMoreCursor key="viewMore" />}
+        {showViewMore && <ViewMoreCursor key="viewMore" currentPosition={cursorPosition} />}
       </AnimatePresence>
     </CursorContext.Provider>
   );

@@ -23,13 +23,13 @@ const statusLabels = {
   'archived': 'Archived'
 };
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <Link
       href={`/projects/${project.id}`}
-      className="group relative cursor-pointer block"
+      className="group relative cursor-pointer block cursor-view-more"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

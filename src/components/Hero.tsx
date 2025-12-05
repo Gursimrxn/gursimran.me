@@ -116,7 +116,7 @@ const Hero = () => {
                 </h1>
 
                 <p ref={descRef} className="text-center mb-12 max-w-3xl m-auto text-black/75 font-product cursor-text">
-                    I'm a student developer with 3+ years of experience. I enjoy breaking and building full-stack apps, AI agents, and decentralized apps, often during hackathons or late-night projects.
+                    I&apos;m a student developer with 3+ years of experience. I enjoy breaking and building full-stack apps, AI agents, and decentralized apps, often during hackathons or late-night projects.
                 </p>
             </div>
         </section>

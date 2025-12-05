@@ -73,7 +73,7 @@ export function useLenis(options: {
       lenisManager.setLenisInstance(null);
       lenisRef.current = null;
     };
-  }, [enabled]);
+  }, [enabled, lenisOptions]);
 
   return lenisRef;
 }

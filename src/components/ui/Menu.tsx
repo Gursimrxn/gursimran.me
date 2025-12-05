@@ -244,7 +244,7 @@ export const Menu: React.FC<MenuProps> = ({
 
         openTlRef.current = tl;
         return tl;
-    }, [position]);
+    }, []);
 
     const playOpen = useCallback(() => {
         if (busyRef.current) return;
